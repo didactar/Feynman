@@ -1,6 +1,7 @@
 from database import db
 
 class Event(db.Model):
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
 
@@ -13,3 +14,7 @@ class Event(db.Model):
         db.session.add(event)
         db.session.commit()
         return event
+
+    @classmethod
+    def all(self):
+        return Event.query.all()
