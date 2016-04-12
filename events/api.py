@@ -5,6 +5,7 @@ from .models import Event
 from .serializers import event_detail_serializer
 from .serializers import event_list_serializer
 
+
 events = Blueprint('events', __name__)
 
 
@@ -20,3 +21,19 @@ def event_list():
         title = data['title']
         event = Event.new(title)
         return event_detail_serializer(event), 201
+
+
+
+@events.route('/events/<slug>', methods=['GET', 'DELETE'])
+def event_detail(slug):
+
+    if request.method == 'GET':
+        event = Event.get(slug)
+        if event:
+            return event_detail_serializer(event)
+        else:
+            return '', 404
+
+    if request.method == 'DELETE':
+        Event.delete(slug)
+        return '', 204
