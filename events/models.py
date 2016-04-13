@@ -5,10 +5,12 @@ class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512))
+    description = db.Column(db.Text)
     slug = db.Column(db.String(1024))
 
-    def __init__(self, title):
+    def __init__(self, title, description):
         self.title = title
+        self.description = description
         self.slug = slugify(title, to_lower=True)
 
     @classmethod
@@ -16,8 +18,8 @@ class Event(db.Model):
         return Event.query.all()
 
     @classmethod
-    def new(self, title):
-        event = Event(title)
+    def new(self, title, description):
+        event = Event(title, description)
         db.session.add(event)
         db.session.commit()
         return event

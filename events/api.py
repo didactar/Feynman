@@ -19,7 +19,8 @@ def event_list():
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
         title = data['title']
-        event = Event.new(title)
+        description = data['description']
+        event = Event.new(title, description)
         return event_detail_serializer(event), 201
 
 

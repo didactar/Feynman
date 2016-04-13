@@ -1,7 +1,11 @@
 from flask import jsonify
 
 def event_serializer(event):
-    return {'title': event.title, 'slug': event.slug}
+    return {
+        'title': event.title, 
+        'slug': event.slug,
+        'description': event.description
+    }
 
 def event_detail_serializer(event):
     return jsonify(event_serializer(event))
