@@ -9,7 +9,7 @@ from .serializers import event_list_serializer
 events = Blueprint('events', __name__)
 
 
-@events.route('/events', methods=['GET', 'POST'])
+@events.route('/api/v1/events/', methods=['GET', 'POST'])
 def event_list():
 
     if request.method == 'GET':
@@ -25,13 +25,13 @@ def event_list():
 
 
 
-@events.route('/events/<slug>', methods=['GET', 'DELETE'])
+@events.route('/api/v1/events/<slug>/', methods=['GET', 'DELETE'])
 def event_detail(slug):
 
     if request.method == 'GET':
         event = Event.get(slug)
         if event:
-            return event_detail_serializer(event)
+            return event_detail_serializer(event), 200
         else:
             return '', 404
 
