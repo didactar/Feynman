@@ -1,52 +1,40 @@
 import requests
 from slugify import slugify
 import json
+import os
 
 
 BASE_URL = 'http://127.0.0.1:5000/api/v1/'
 
-topic_1 = {
-    'name': 'Biology',
-    'description': 'This is a topic about biology'
-}
-
-topic_2 = {
-    'name': 'Astronomy',
-    'description': 'This is a topic about astronomy'
-}
-
-topic_3 = {
-    'name': 'Science',
-    'description': 'This is a topic about science'
-}
-
+DATA_FILE = os.path.join(os.path.dirname(__file__), './test_topics_data.json')
+with open(DATA_FILE) as data_file:    
+    TOPICS = json.load(data_file)
 
 
 class TestTopic:
 
     def test_create_topics(self):
         url = BASE_URL + 'topics'
-        r = requests.post(url, json=topic_1) 
-        assert r.status_code == 201
-        r = requests.post(url, json=topic_2) 
-        assert r.status_code == 201
-        r = requests.post(url, json=topic_3) 
-        assert r.status_code == 201
+        for topic in TOPICS:
+            r = requests.post(url, json=topic) 
+            assert r.status_code == 201
 
     def test_get_topics_list(self):
         url = BASE_URL + 'topics'
         r = requests.get(url) 
         data = json.loads(r.content.decode('utf-8'))
-        assert len(data['data']) == 3
+        assert len(data['data']) == len(TOPICS)
         assert r.status_code == 200
 
     def test_get_topic(self):
-        url = BASE_URL + 'topics/' + slugify(topic_1['name'], to_lower=True)
-        r = requests.get(url) 
-        assert r.status_code == 200
-        data = json.loads(r.content.decode('utf-8'))
-        assert data['slug'] == slugify(topic_1['name'], to_lower=True)
-        assert data['description'] == topic_1['description']
+        for topic in TOPICS:
+            slug = slugify(topic['name'], to_lower=True)
+            url = BASE_URL + 'topics/' + slug
+            r = requests.get(url) 
+            data = json.loads(r.content.decode('utf-8'))
+            assert r.status_code == 200
+            assert data['slug'] == slug
+            assert data['description'] == topic['description']
 
     def test_get_unexisting_topic(self):
         url = BASE_URL + 'topics/123abc123abc' 
@@ -54,8 +42,8 @@ class TestTopic:
         assert r.status_code == 404
 
     def test_delete_topic(self):
-        url = BASE_URL + 'topics/' + slugify(topic_1['name'], to_lower=True)
-        r = requests.delete(url) 
-        assert r.status_code == 204
-        r = requests.get(url) 
-        assert r.status_code == 404
+        for topic in TOPICS:
+            slug = slugify(topic['name'], to_lower=True)
+            url = BASE_URL + 'topics/' + slug
+            assert requests.delete(url).status_code == 204
+            assert requests.delete(url).status_code == 404

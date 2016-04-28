@@ -33,3 +33,7 @@ class Event(db.Model):
         event = Event.get(slug)
         db.session.delete(event)
         db.session.commit()
+
+    @classmethod
+    def filterByTopic(self, topic):
+        return Event.query.filter_by(topic=topic)

@@ -36,5 +36,9 @@ def event_detail(slug):
             return '', 404
 
     if request.method == 'DELETE':
-        Event.delete(slug)
-        return '', 204
+        event = Event.get(slug)
+        if event:
+            Event.delete(slug)
+            return '', 204
+        else:
+            return '', 404

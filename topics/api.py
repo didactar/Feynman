@@ -5,6 +5,9 @@ from .models import Topic
 from .serializers import topic_detail_serializer
 from .serializers import topic_list_serializer
 
+from events.serializers import event_list_serializer
+from events.models import Event
+
 
 topics = Blueprint('topics', __name__)
 
@@ -36,5 +39,22 @@ def topic_detail(slug):
             return '', 404
 
     if request.method == 'DELETE':
-        Topic.delete(slug)
-        return '', 204
+        topic = Topic.get(slug)
+        if topic:
+            Topic.delete(slug)
+            return '', 204
+        else:
+            return '', 404
+
+
+
+@topics.route('/api/v1/topics/<slug>/events', methods=['GET'])
+def topic_event_list(slug):
+
+    if request.method == 'GET':
+        topic = Topic.get(slug)
+        if topic:
+            events = Event.filterByTopic(topic)
+            return event_list_serializer(events), 200
+        else:
+            return '', 404
