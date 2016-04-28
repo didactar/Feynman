@@ -10,6 +10,9 @@ db.init_app(app)
 from flask.ext.cors import CORS
 CORS(app)
 
+from me.api import me
+app.register_blueprint(me)
+
 from events.api import events
 app.register_blueprint(events)
 
