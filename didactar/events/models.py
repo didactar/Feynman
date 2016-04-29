@@ -1,8 +1,8 @@
-from database import db
 from slugify import slugify
+from didactar.database import db
 
 class Event(db.Model):
-
+    
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512))
     description = db.Column(db.Text)
@@ -18,22 +18,16 @@ class Event(db.Model):
         return Event.query.all()
 
     @classmethod
-    def new(self, title, description):
-        event = Event(title, description)
+    def create(self, data):
+        event = Event(data['title'], data['description'])
         db.session.add(event)
         db.session.commit()
         return event
 
     @classmethod
-    def get(self, slug):
-        return Event.query.filter_by(slug=slug).first()
+    def get(self, event_slug):
+        return Event.query.filter_by(slug=event_slug).first()
 
-    @classmethod
-    def delete(self, slug):
-        event = Event.get(slug)
-        db.session.delete(event)
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()
-
-    @classmethod
-    def filterByTopic(self, topic):
-        return Event.query.filter_by(topic=topic)

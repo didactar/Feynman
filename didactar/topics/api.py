@@ -5,14 +5,14 @@ from .models import Topic
 from .serializers import topic_detail_serializer
 from .serializers import topic_list_serializer
 
-from events.serializers import event_list_serializer
-from events.models import Event
+from didactar.events.serializers import event_list_serializer
+from didactar.events.models import Event
 
 
 topics = Blueprint('topics', __name__)
 
 
-@topics.route('/api/v1/topics', methods=['GET', 'POST'])
+@topics.route('/topics', methods=['GET', 'POST'])
 def topic_list():
 
     if request.method == 'GET':
@@ -28,7 +28,7 @@ def topic_list():
 
 
 
-@topics.route('/api/v1/topics/<slug>', methods=['GET', 'DELETE'])
+@topics.route('/<slug>', methods=['GET', 'DELETE'])
 def topic_detail(slug):
 
     if request.method == 'GET':
@@ -48,7 +48,7 @@ def topic_detail(slug):
 
 
 
-@topics.route('/api/v1/topics/<slug>/events', methods=['GET'])
+@topics.route('/topics/<slug>/events', methods=['GET'])
 def topic_event_list(slug):
 
     if request.method == 'GET':

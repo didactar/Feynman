@@ -1,5 +1,5 @@
-from database import db
 from slugify import slugify
+from didactar.database import db
 
 class Topic(db.Model):
 
