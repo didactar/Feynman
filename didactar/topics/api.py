@@ -23,12 +23,15 @@ def topic_list():
         data = json.loads(request.data.decode('utf-8'))
         name = data['name']
         description = data['description']
-        topic = Topic.new(name, description)
-        return topic_detail_serializer(topic), 201
+        try:
+            topic = Topic.new(name, description)
+            return topic_detail_serializer(topic), 201
+        except:
+            return '', 400 
 
 
 
-@topics.route('/<slug>', methods=['GET', 'DELETE'])
+@topics.route('/topics/<slug>', methods=['GET', 'DELETE'])
 def topic_detail(slug):
 
     if request.method == 'GET':
@@ -45,7 +48,6 @@ def topic_detail(slug):
             return '', 204
         else:
             return '', 404
-
 
 
 @topics.route('/topics/<slug>/events', methods=['GET'])
