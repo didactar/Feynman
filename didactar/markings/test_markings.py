@@ -4,7 +4,7 @@ from slugify import slugify
 import json
 
 from didactar import BASE_URL
-from didactar import create_test_app
+from didactar import setup_test_app
 
 
 URL = BASE_URL + 'topics'
@@ -25,13 +25,13 @@ def populate_database():
 
 
 @pytest.fixture(scope='module')
-def setup_events_topics():
-    create_test_app()
+def setup_markings():
+    setup_test_app()
     populate_database()
 
 
 
-def test_create_get_delete_events_topics(setup_events_topics):
+def test_create_get_delete_markings(setup_markings):
 
     # get existing events and topics
     

@@ -4,7 +4,7 @@ from slugify import slugify
 import json
 
 from didactar import BASE_URL
-from didactar import create_test_app
+from didactar import setup_test_app
 
 
 URL = BASE_URL + 'topics'
@@ -12,7 +12,7 @@ URL = BASE_URL + 'topics'
 
 @pytest.fixture(scope='module')
 def setup_topics():
-    create_test_app()
+    setup_test_app()
 
 
 def test_create_get_delete_topics(setup_topics):
