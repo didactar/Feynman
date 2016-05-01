@@ -2,6 +2,7 @@ from flask import jsonify
 
 def topic_serializer(topic):
     return {
+        'id': topic.id, 
         'name': topic.name, 
         'slug': topic.slug,
         'description': topic.description

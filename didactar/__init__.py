@@ -39,7 +39,8 @@ def create_app(config_object):
     app.register_blueprint(me, url_prefix=prefix)
     app.register_blueprint(events, url_prefix=prefix)
     app.register_blueprint(topics, url_prefix=prefix)
-
+    app.register_blueprint(events_topics, url_prefix=prefix)
+    
     return app
 
 
