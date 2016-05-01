@@ -48,15 +48,3 @@ def topic_detail(slug):
             return '', 204
         else:
             return '', 404
-
-
-@topics.route('/topics/<slug>/events', methods=['GET'])
-def topic_event_list(slug):
-
-    if request.method == 'GET':
-        topic = Topic.get(slug)
-        if topic:
-            events = Event.filterByTopic(topic)
-            return event_list_serializer(events), 200
-        else:
-            return '', 404

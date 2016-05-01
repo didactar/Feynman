@@ -45,25 +45,36 @@ def test_create_get_delete_events_topics(setup_events_topics):
     topics = json.loads(topics_content)['data']
     assert len(topics)
 
+    # create each topic for each event
     for event in events:
         for topic in topics:
-
-            # create each topic for each event
             list_url = BASE_URL + 'events/' + event['slug'] + '/topics'
             r = requests.post(list_url, json=topic)
             assert r.status_code == 201
 
-            # get detail
-            detail_url = BASE_URL + 'events/' + event['slug'] + '/topics/' + topic['slug']
-            r = requests.get(detail_url)
-            assert r.status_code == 200
-            
-            # check correct data
-            request_content = r.content.decode('utf-8')
-            data = json.loads(request_content)
-            assert data['event']['id'] == event['id']
-            assert data['topic']['id'] == topic['id']
+    # check all topics for each event    
+    for event in events:
+        topic_list_url = BASE_URL + 'events/' + event['slug'] + '/topics'
+        r = requests.get(topic_list_url)
+        assert r.status_code == 200
+        request_content = r.content.decode('utf-8')
+        event_topics = json.loads(request_content)['data']
+        assert len(event_topics) == len(topics)    
 
-            # delete each topic from each event
+
+    # check all events for each topic    
+    for topic in topics:
+        event_list_url = BASE_URL + 'topics/' + topic['slug'] + '/events'
+        r = requests.get(event_list_url)
+        assert r.status_code == 200
+        request_content = r.content.decode('utf-8')
+        topic_events = json.loads(request_content)['data']
+        assert len(topic_events) == len(events)    
+
+
+    # delete each topic from each event
+    for event in events:
+        for topic in topics:
+            detail_url = BASE_URL + 'events/' + event['slug'] + '/topics/' + topic['slug']
             assert requests.delete(detail_url).status_code == 204
             assert requests.delete(detail_url).status_code == 404

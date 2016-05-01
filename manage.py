@@ -15,29 +15,22 @@ def parse_commandline_arguments():
     return parser.parse_args()
 
 
-def reset_database(app):
-    with app.app_context():
-        db.reflect()
-        db.drop_all()
-        db.create_all()
-
-
 if __name__ == '__main__':
 
     args = parse_commandline_arguments()
     
     if args.reset_db:
         app = create_develop_app()
-        reset_database(app)
-        exit()
+        with app.app_context():
+            db.reflect()
+            db.drop_all()
+            db.create_all()
 
     if args.populate_db:
         populate_database()
-        exit()
 
     if args.test_server:
         app = create_test_app()
-        reset_database(app)
         app.run(threaded=True)
 
     if args.dev_server:

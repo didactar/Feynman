@@ -30,9 +30,14 @@ class EventTopic(db.Model):
                     topic_id=topic_id).first()
 
     @classmethod
-    def filter_by_event(self, event_slug=''):
+    def filter_by_event(self, event_slug):
         event_id = Event.get(event_slug).id
         return EventTopic.query.filter_by(event_id=event_id)
+
+    @classmethod
+    def filter_by_topic(self, topic_slug):
+        topic_id = Topic.get(topic_slug).id
+        return EventTopic.query.filter_by(topic_id=topic_id)
 
     def delete(self):
         db.session.delete(self)
