@@ -28,8 +28,6 @@ class Topic(db.Model):
     def get(self, slug):
         return Topic.query.filter_by(slug=slug).first()
 
-    @classmethod
-    def delete(self, slug):
-        topic = Topic.get(slug)
-        db.session.delete(topic)
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()

@@ -1,4 +1,4 @@
-from database import db
+from didactar.database import db
 
 class EventTopic(db.Model):
 

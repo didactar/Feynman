@@ -44,7 +44,7 @@ def topic_detail(slug):
     if request.method == 'DELETE':
         topic = Topic.get(slug)
         if topic:
-            Topic.delete(slug)
+            topic.delete()
             return '', 204
         else:
             return '', 404

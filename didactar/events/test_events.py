@@ -2,37 +2,22 @@ import pytest
 import requests
 from slugify import slugify
 import json
-import os
 
-from didactar.database import db
-from didactar import create_app
-from didactar.config import TestConfig
-
-from didactar.utils.shared_test_functions import BASE_URL
-
+from didactar import BASE_URL
+from didactar import create_test_app
 
 URL = BASE_URL + 'events'
 
-def load_json_file(json_file):
-    dir_path = os.path.dirname(__file__)
-    file_path = os.path.join(dir_path, json_file)
-    with open(file_path) as f:
-        return json.load(f)
 
-EVENTS = load_json_file('test_events_data.json')
-
-
-@pytest.yield_fixture(scope="module")
+@pytest.fixture(scope='module')
 def setup_events():
-    app = create_app(TestConfig)
-    ctx = app.app_context()
-    ctx.push()
-    yield
-    db.session.rollback()
-    db.session.remove()
+    create_test_app()
 
 
 def test_create_get_delete_events(setup_events):
+
+    with open('didactar/events/test_events_data.json') as f:
+        EVENTS = json.load(f)
 
     # create events
     for event in EVENTS:

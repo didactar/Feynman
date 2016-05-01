@@ -7,7 +7,7 @@ from .models import EventTopic
 events_topics = Blueprint('events_topics', __name__)
 
 
-@events_topics.route('/<event_slug>/topics', methods=['GET', 'POST'])
+@events_topics.route('/events/<event_slug>/topics', methods=['GET', 'POST'])
 def event_topic_list():
 
     if request.method == 'GET':
@@ -17,12 +17,14 @@ def event_topic_list():
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
         topic_slug = data['topic']['slug']
-        event_topic = EventTopic.create(event_slug=event_slug, topic_slug=topic_slug)
+        event_topic = EventTopic.create(event_slug, topic_slug)
+        if not event_topic:
+            return '', 400
         return event_topic_detail_serializer(event_topic), 201
 
 
 
-@events_topics.route('/<event_slug>/topics/<topic_slug>', methods=['GET', 'DELETE'])
+@events_topics.route('/events/<event_slug>/topics/<topic_slug>', methods=['GET', 'DELETE'])
 def event_topic_detail(slug):
 
     if request.method == 'GET':

@@ -2,37 +2,23 @@ import pytest
 import requests
 from slugify import slugify
 import json
-import os
 
-from didactar.database import db
-from didactar import create_app
-from didactar.config import TestConfig
-
-from didactar.utils.shared_test_functions import BASE_URL
+from didactar import BASE_URL
+from didactar import create_test_app
 
 
 URL = BASE_URL + 'topics'
 
-def load_json_file(json_file):
-    dir_path = os.path.dirname(__file__)
-    file_path = os.path.join(dir_path, json_file)
-    with open(file_path) as f:
-        return json.load(f)
 
-TOPICS = load_json_file('test_topics_data.json')
-
-
-@pytest.yield_fixture(scope="session")
+@pytest.fixture(scope='module')
 def setup_topics():
-    app = create_app(TestConfig)
-    ctx = app.app_context()
-    ctx.push()
-    yield
-    db.session.rollback()
-    db.session.remove()
+    create_test_app()
 
 
 def test_create_get_delete_topics(setup_topics):
+
+    with open('didactar/topics/test_topics_data.json') as f:
+        TOPICS = json.load(f)
 
     # create topics
     for topic in TOPICS:
