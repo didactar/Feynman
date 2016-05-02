@@ -38,8 +38,7 @@ def create_app(config_object):
     db.init_app(app)
 
     blueprints = [
-        me, users, events, topics, markings, 
-        participations
+        me, users, events, topics, markings, participations
     ]
     for b in blueprints:
         app.register_blueprint(b, url_prefix='/api/v1')
