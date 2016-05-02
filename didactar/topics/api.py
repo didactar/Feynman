@@ -1,13 +1,10 @@
 import json
 from flask import Blueprint
 from flask import request
+
 from .models import Topic
 from .serializers import topic_detail_serializer
 from .serializers import topic_list_serializer
-
-from didactar.events.serializers import event_list_serializer
-from didactar.events.models import Event
-
 
 topics = Blueprint('topics', __name__)
 

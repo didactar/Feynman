@@ -19,7 +19,9 @@ class Event(db.Model):
 
     @classmethod
     def create(self, data):
-        event = Event(data['title'], data['description'])
+        title = data['title']
+        description = data['description']
+        event = Event(title, description)
         db.session.add(event)
         db.session.commit()
         return event

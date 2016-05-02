@@ -1,3 +1,4 @@
+
 import pytest
 import requests
 from slugify import slugify
@@ -5,6 +6,7 @@ import json
 
 from didactar import BASE_URL
 from didactar import setup_test_app
+
 
 URL = BASE_URL + 'events'
 

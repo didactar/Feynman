@@ -1,10 +1,10 @@
 import json
 from flask import Blueprint
 from flask import request
+
 from .models import Event
 from .serializers import event_detail_serializer
 from .serializers import event_list_serializer
-
 
 events = Blueprint('events', __name__)
 

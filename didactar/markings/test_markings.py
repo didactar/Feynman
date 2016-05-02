@@ -23,12 +23,10 @@ def populate_database():
         requests.post(BASE_URL + 'topics', json=topic) 
 
 
-
 @pytest.fixture(scope='module')
 def setup_markings():
     setup_test_app()
     populate_database()
-
 
 
 def test_create_get_delete_markings(setup_markings):
@@ -61,7 +59,6 @@ def test_create_get_delete_markings(setup_markings):
         event_topics = json.loads(request_content)['data']
         assert len(event_topics) == len(topics)    
 
-
     # check all events for each topic    
     for topic in topics:
         event_list_url = BASE_URL + 'topics/' + topic['slug'] + '/events'
@@ -70,7 +67,6 @@ def test_create_get_delete_markings(setup_markings):
         request_content = r.content.decode('utf-8')
         topic_events = json.loads(request_content)['data']
         assert len(topic_events) == len(events)    
-
 
     # delete each topic from each event
     for event in events:

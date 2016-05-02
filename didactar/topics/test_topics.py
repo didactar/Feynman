@@ -6,9 +6,7 @@ import json
 from didactar import BASE_URL
 from didactar import setup_test_app
 
-
 URL = BASE_URL + 'topics'
-
 
 @pytest.fixture(scope='module')
 def setup_topics():

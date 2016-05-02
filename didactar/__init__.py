@@ -7,10 +7,12 @@ from didactar.config import DevelopConfig
 from didactar.config import TestConfig
 
 from didactar.me.api import me
+from didactar.users.api import users
 from didactar.events.api import events
 from didactar.topics.api import topics
 from didactar.markings.api import markings
 
+from didactar.users.models import User
 from didactar.events.models import Event
 from didactar.topics.models import Topic
 from didactar.markings.models import Marking
@@ -20,12 +22,10 @@ BASE_URL = 'http://127.0.0.1:5000/api/v1/'
 
 
 def clear_database():
-    events = Event.query.all()
-    topics = Topic.query.all()
-    markings = Marking.query.all()
-    all_items = events + topics + markings
-    for item in all_items:
-        item.delete()
+    models = [Event, Topic, Marking, User]
+    for model in models:
+        for item in model.query.all():
+            item.delete()
 
 
 def create_app(config_object):
@@ -35,11 +35,9 @@ def create_app(config_object):
     CORS(app)
     db.init_app(app)
 
-    prefix='/api/v1'
-    app.register_blueprint(me, url_prefix=prefix)
-    app.register_blueprint(events, url_prefix=prefix)
-    app.register_blueprint(topics, url_prefix=prefix)
-    app.register_blueprint(markings, url_prefix=prefix)
+    blueprints = [me, users, events, topics, markings]
+    for b in blueprints:
+        app.register_blueprint(b, url_prefix='/api/v1')
     
     return app
 

@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Carl Sagan", 
+    "avatar": "http://carlsaganday.com/wp-content/uploads/2013/09/carlsagan.jpg"
+  }, 
+  {
+    "name": "Isaac Asimov", 
+    "avatar": "http://www.slate.com/content/dam/slate/articles/technology/future_tense/2013/11/131113_FT_IsaacAsimov.jpg.CROP.promo-mediumlarge.jpg" 
+  }, 
+  {
+    "name": "Richard Feynman", 
+    "avatar": "http://www.washington.edu/news/files/2011/10/RichardFeynmanBBC.jpg" 
+  }, 
+  {
+    "name": "Jane Goodall", 
+    "avatar": "http://hilobrow.com/wp-content/uploads/2012/04/jane_goodall.jpg" 
+  }, 
+  {
+    "name": "David Attenborough", 
+    "avatar": "http://www.rspb.org.uk/Images/david_attenborough_tcm9-345814.jpg"
+  }, 
+  {
+    "name": "Dan Ariely", 
+    "avatar": "http://media.npr.org/books/booktour/2008/mar/ariely_200-7e2989bc6a3082b3c7f7e27e4d549f5d723bc45c-s6-c30.jpg" 
+  }, 
+  {
+    "name": "John Green", 
+    "avatar": "http://i.telegraph.co.uk/multimedia/archive/02929/John-Green_2929212b.jpg" 
+  }, 
+  {
+    "name": "Hank Green", 
+    "avatar": "https://amandafinlawwritingportfolio.files.wordpress.com/2013/04/hank-green.png"
+  }, 
+  {
+    "name": "Walter Lewin", 
+    "avatar": "http://i.huffpost.com/gen/2527556/images/n-WALTER-LEWIN-large570.jpg" 
+  }, 
+  {
+    "name": "Paul Bloom", 
+    "avatar": "https://pbs.twimg.com/profile_images/505859392999153664/dwZOxfAP.jpeg"
+  }, 
+  {
+    "name": "Bill Nye", 
+    "avatar": "http://rack.1.mshcdn.com/media/ZgkyMDEzLzA5LzE5LzQwL2JpbGxueWVzY2llLjUyYzc2LmpwZwpwCXRodW1iCTk1MHg1MzQjCmUJanBn/35d31e02/92c/bill-nye-science.jpg" 
+  }, 
+  {
+    "name": "Ann Druyan", 
+    "avatar": "http://www.nasa.gov/images/content/270965main_ann-druyan-browse.jpg" 
+  }, 
+  {
+    "name": "Neil DeGrasse Tyson", 
+    "avatar": "http://climatechangenationalforum.org/wp-content/uploads/2014/03/NeilDeGrasseTyson.png"
+  }, 
+  {
+    "name": "Chuck Bryant", 
+    "avatar": "https://s-media-cache-ak0.pinimg.com/236x/de/5f/54/de5f54206d547a9da757290111162c1d.jpg" 
+  }, 
+  {
+    "name": "Josh Clark", 
+    "avatar": "http://www1.pictures.zimbio.com/gi/Josh+Clark+2013+Winter+TCA+Tour+Day+2+-CX_SC4Phhxl.jpg" 
+  }, 
+  {
+    "name": "Robert Sapolsky", 
+    "avatar": "http://newsinfo.iu.edu/pub/libs/images/usr/4448.jpg" 
+  }, 
+  {
+    "name": "Michael Sandel", 
+    "avatar": "http://www.thesundaytimes.co.uk/sto/multimedia/dynamic/00271/05INT_271306k.jpg" 
+  }, 
+  {
+    "name": "Donald Knuth", 
+    "avatar": "http://news.stanford.edu/news/2011/june/images/knuth_news.jpg" 
+  },
+  {
+    "name": "Paul Andersen", 
+    "avatar": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSatMF8-Oukr4Gr-yZyZLTshdyiEqdy24Ym3Q9VBxHQ4NvkpeOU"
+  },
+  {
+    "name": "Salman Khan", 
+    "avatar": "https://pbs.twimg.com/media/CX-gEtwWAAAUshI.jpg" 
+  },
+  {
+    "name": "Jared Diamond", 
+    "avatar": "http://d39ya49a1fwv14.cloudfront.net/wp-content/uploads/2012/08/JaredDiamond.jpg" 
+  },
+  {
+    "name": "Richard Dawkins", 
+    "avatar": "https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2012/1/13/1326497319868/Richard-Dawkins-007.jpg" 
+  },
+  {
+    "name": "Lawrence M. Krauss", 
+    "avatar": "http://assets1.bigthink.com/system/user_icons/481033/original/Lawrence-Krauss-HS.jpg"
+  },
+  {
+    "name": "Steven Pinker", 
+    "avatar": "http://vignette1.wikia.nocookie.net/wikiality/images/4/4f/Stephen-Pinker.jpg/revision/latest?cb=20070209013827"
+  },
+  {
+    "name": "Daniel Dennett", 
+    "avatar": "http://www.wittenburgdoor.com/files/images2/dennett300.jpg" 
+  },
+  {
+    "name": "Stephen Jay Gould", 
+    "avatar": "http://www.findingdulcinea.com/docroot/dulcinea/fd_images/features/profiles/g/stephen-jay-gould/features/0/image.jpg"
+  },
+  {
+    "name": "Stephen Hawking", 
+    "avatar": "http://vignette2.wikia.nocookie.net/epicrapbattlesofhistory/images/1/1a/Stephen_Hawking_Based_On.jpg/revision/latest?cb=20150822054937"
+  },
+  {
+    "name": "Brian Greene", 
+    "avatar": "http://www.wired.com/images_blogs/underwire/2012/05/briane_greene_660.jpg" 
+  },
+  {
+    "name": "Michael Shermer", 
+    "avatar": "https://pbs.twimg.com/profile_images/471409723636322304/BDjFSn30.jpeg"
+  }, 
+  {
+    "name": "Phil Plait", 
+    "avatar": "http://www.samaralectures.com/wp-content/uploads/2011/01/pplait-homepage1.jpg" 
+  }, 
+  {
+    "name": "Andrew Ng", 
+    "avatar": "https://s3.amazonaws.com/coursera/media/Andrew_Ng.png"
+  },
+  {
+    "name": "Susan Greenfield", 
+    "avatar": "https://d.ibtimes.co.uk/en/full/272983/baroness-susan-greenfield.jpg" 
+  },
+  {
+    "name": "Oliver Sacks", 
+    "avatar": "https://williamoconnor.files.wordpress.com/2015/08/sacks1.jpg" 
+  },
+  {
+    "name": "Hans Rosling", 
+    "avatar": "http://i.bnet.com/blogs/hans_rosling_254x191.jpg" 
+  },
+  {
+    "name": "Brian Cox", 
+    "avatar": "http://media.ents24network.com/image/000/043/729/0e038e7949f1422e3324c3369fdb067e6a2b113a.jpg" 
+  },
+  {
+    "name": "Ben Goldacre", 
+    "avatar": "https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2009/01/05/BenGoldacre460.jpg"
+  }
+]
