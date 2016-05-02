@@ -27,6 +27,12 @@ class Marking(db.Model):
         topic_id = Topic.get(topic_slug).id
         return Marking.query.filter_by(topic_id=topic_id)
 
+    def get_topic(self):
+        return Topic.get_by_id(self.topic_id)
+    
+    def get_event(self):
+        return Event.get_by_id(self.event_id)
+
     def save(self):
         db.session.add(self)
         db.session.commit()

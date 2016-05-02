@@ -29,6 +29,10 @@ class Event(db.Model):
     @classmethod
     def get(self, event_slug):
         return Event.query.filter_by(slug=event_slug).first()
+    
+    @classmethod
+    def get_by_id(self, id):
+        return Event.query.filter_by(id=id).first()
 
     def delete(self):
         db.session.delete(self)
