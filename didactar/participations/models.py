@@ -2,6 +2,7 @@ from didactar.database import db
 from didactar.events.models import Event
 from didactar.users.models import User
 
+
 class Participation(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)

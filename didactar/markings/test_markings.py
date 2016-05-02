@@ -1,3 +1,7 @@
+import sys, os
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, path + '/../../')
+
 import pytest
 import requests
 from slugify import slugify
@@ -5,9 +9,6 @@ import json
 
 from didactar import BASE_URL
 from didactar import setup_test_app
-
-
-URL = BASE_URL + 'topics'
 
 
 def populate_database():
@@ -46,31 +47,36 @@ def test_create_get_delete_markings(setup_markings):
     # create each topic for each event
     for event in events:
         for topic in topics:
-            list_url = BASE_URL + 'events/' + event['slug'] + '/topics'
-            r = requests.post(list_url, json=topic)
+            list_url = BASE_URL + 'markings'
+            data = {'event': event, 'topic': topic}
+            r = requests.post(list_url, json=data)
             assert r.status_code == 201
 
     # check all topics for each event    
     for event in events:
-        topic_list_url = BASE_URL + 'events/' + event['slug'] + '/topics'
-        r = requests.get(topic_list_url)
+        event_markings_url = BASE_URL + 'events/' + event['slug'] + '/markings'
+        r = requests.get(event_markings_url)
         assert r.status_code == 200
         request_content = r.content.decode('utf-8')
-        event_topics = json.loads(request_content)['data']
-        assert len(event_topics) == len(topics)    
+        event_markings = json.loads(request_content)['data']
+        assert len(event_markings) == len(topics)    
 
     # check all events for each topic    
     for topic in topics:
-        event_list_url = BASE_URL + 'topics/' + topic['slug'] + '/events'
-        r = requests.get(event_list_url)
+        topic_markings_url = BASE_URL + 'topics/' + topic['slug'] + '/markings'
+        r = requests.get(topic_markings_url)
         assert r.status_code == 200
         request_content = r.content.decode('utf-8')
-        topic_events = json.loads(request_content)['data']
-        assert len(topic_events) == len(events)    
+        topic_markings = json.loads(request_content)['data']
+        assert len(topic_markings) == len(events)
 
-    # delete each topic from each event
+    # delete all markings
     for event in events:
-        for topic in topics:
-            detail_url = BASE_URL + 'events/' + event['slug'] + '/topics/' + topic['slug']
-            assert requests.delete(detail_url).status_code == 204
-            assert requests.delete(detail_url).status_code == 404
+        event_markings = BASE_URL + 'events/' + event['slug'] + '/markings'
+        r = requests.get(event_markings)
+        request_content = r.content.decode('utf-8')
+        markings = json.loads(request_content)['data']
+        for m in markings:
+            marking_detail_url = '{}markings/{}'.format(BASE_URL, m['id'])
+            assert requests.delete(marking_detail_url).status_code == 204
+            assert requests.delete(marking_detail_url).status_code == 404

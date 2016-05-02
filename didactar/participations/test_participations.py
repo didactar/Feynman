@@ -11,9 +11,6 @@ from didactar import BASE_URL
 from didactar import setup_test_app
 
 
-URL = BASE_URL + 'events'
-
-
 def populate_database():
 
     with open('didactar/events/test_events_data.json') as f:
