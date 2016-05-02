@@ -2,6 +2,7 @@ from flask import jsonify
 
 def serializer(user):
     return {
+        'id': user.id, 
         'username': user.username, 
         'name': user.name,
         'avatar': user.avatar

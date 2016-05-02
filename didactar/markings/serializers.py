@@ -13,5 +13,5 @@ def marking_detail_serializer(marking):
     return jsonify(s)
 
 def marking_list_serializer(markings):
-    data = [serializer(et) for et in markings]
+    data = [serializer(m) for m in markings]
     return jsonify(data=data)
