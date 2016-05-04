@@ -20,6 +20,10 @@ class Participation(db.Model):
         return Participation.query.filter_by(event_id=event.id)
 
     @classmethod
+    def event_participations_count(self, event):
+        return Participation.query.filter_by(event_id=event.id).count()
+
+    @classmethod
     def filter_by_user(self, user):
         return Participation.query.filter_by(user_id=user.id)
 
