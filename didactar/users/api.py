@@ -17,8 +17,8 @@ def user_list():
         return user_list_serializer(users)
     
     if request.method == 'POST':
-        data = json.loads(request.data.decode('utf-8'))
         try:
+            data = json.loads(request.data.decode('utf-8'))
             user = User(data)
             user.save()
             return user_detail_serializer(user), 201

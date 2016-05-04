@@ -12,6 +12,7 @@ class User(db.Model):
     def __init__(self, data):
         self.name = data['name']
         self.avatar = data['avatar']
+        self.about = data['about']
         self.username = slugify(data['name'], to_lower=True)
 
     @classmethod
