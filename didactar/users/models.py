@@ -7,6 +7,7 @@ class User(db.Model):
     name = db.Column(db.String(256))
     username = db.Column(db.String(512))
     avatar = db.Column(db.String(512))
+    about = db.Column(db.Text)
 
     def __init__(self, data):
         self.name = data['name']
@@ -18,8 +19,12 @@ class User(db.Model):
         return User.query.all()
 
     @classmethod
-    def get(cls, username):
+    def get_by_username(cls, username):
         return User.query.filter_by(username=username).first()
+    
+    @classmethod
+    def get_by_id(self, id):
+        return User.query.filter_by(id=id).first()
 
     def save(self):
         db.session.add(self)

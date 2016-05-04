@@ -27,7 +27,7 @@ class Event(db.Model):
         return event
 
     @classmethod
-    def get(self, event_slug):
+    def get_by_slug(self, event_slug):
         return Event.query.filter_by(slug=event_slug).first()
     
     @classmethod

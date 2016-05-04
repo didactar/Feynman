@@ -23,11 +23,11 @@ from didactar.participations.models import Participation
 BASE_URL = 'http://127.0.0.1:5000/api/v1/'
 
 
-def clear_database():
-    models = [Event, Topic, Marking, User, Participation]
-    for model in models:
-        for item in model.query.all():
-            item.delete()
+def create_database(app):
+    with app.app_context():
+        db.reflect()
+        db.drop_all()
+        db.create_all()
 
 
 def create_app(config_object):
@@ -49,12 +49,17 @@ def create_app(config_object):
 def create_develop_app():
     return create_app(DevelopConfig)
 
+
 def create_test_app():
     return create_app(TestConfig)
+
 
 def setup_test_app():
     app = create_test_app()
     ctx = app.app_context()
     ctx.push()
-    clear_database()
+    models = [Event, Topic, Marking, User, Participation]
+    for model in models:
+        for item in model.query.all():
+            item.delete()
     return app
