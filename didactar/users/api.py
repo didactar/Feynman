@@ -32,15 +32,19 @@ def user_detail(username):
 
     if request.method == 'GET':
         try:
-            user = User.get(username)
+            user = User.get_by_username(username)
+            if not user:
+                return '', 404
             return user_detail_serializer(user), 200
         except:
-            return '', 404
+            return '', 400
 
     if request.method == 'DELETE':
         try:
-            user = User.get(username)
+            user = User.get_by_username(username)
+            if not user:
+                return '', 404
             user.delete()
             return '', 204
         except:
-            return '', 404
+            return '', 400

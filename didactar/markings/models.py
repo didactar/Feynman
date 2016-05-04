@@ -1,6 +1,4 @@
 from didactar.database import db
-from didactar.events.models import Event
-from didactar.topics.models import Topic
 
 
 class Marking(db.Model):
@@ -18,20 +16,18 @@ class Marking(db.Model):
         return Marking.query.filter_by(id=id).first()
 
     @classmethod
-    def filter_by_event(self, event_slug):
-        event_id = Event.get(event_slug).id
-        return Marking.query.filter_by(event_id=event_id)
+    def filter_by_event(self, event):
+        return Marking.query.filter_by(event_id=event.id)
 
     @classmethod
-    def filter_by_topic(self, topic_slug):
-        topic_id = Topic.get(topic_slug).id
-        return Marking.query.filter_by(topic_id=topic_id)
+    def filter_by_topic(self, topic):
+        return Marking.query.filter_by(topic_id=topic.id)
 
-    def get_topic(self):
-        return Topic.get_by_id(self.topic_id)
-    
-    def get_event(self):
-        return Event.get_by_id(self.event_id)
+    def get_event_id(self):
+        return self.event_id
+
+    def get_topic_id(self):
+        return self.topic_id
 
     def save(self):
         db.session.add(self)

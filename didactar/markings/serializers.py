@@ -1,30 +1,54 @@
 from flask import jsonify
 
-def serializer(marking):
-    
-    event = marking.get_event()
-    topic = marking.get_topic()
+from didactar.events.models import Event
+from didactar.topics.models import Topic
 
+
+def detail_dict(marking):
+    return {
+        'id': marking.id,
+        'event': {'id': marking.event_id},
+        'topic': {'id': marking.topic_id}
+    }
+
+
+def detail_dict_event(marking):
+    event_id = marking.get_event_id()
+    event = Event.get_by_id(event_id)
     return {
         'id': marking.id,
         'event': {
-            'id': event.id,
             'slug': event.slug,
-            'title': event.title
-        },
-        'topic': {
-            'id': topic.id,
-            'slug': topic.slug,
-            'name': topic.name
+            'title': event.title,
+            'description': event.description
         }
     }
 
 
-def marking_detail_serializer(marking):
-    s = serializer(marking)
-    return jsonify(s)
+def detail_dict_topic(marking):
+    topic_id = marking.get_topic_id()
+    topic = Topic.get_by_id(topic_id)
+    return {
+        'id': marking.id,
+        'topic': {
+            'name': topic.name,
+            'description': topic.description,
+            'slug': topic.slug,
+            'avatar': topic.avatar
+        }
+    }
 
 
-def marking_list_serializer(markings):
-    data = [serializer(m) for m in markings]
-    return jsonify(data=data)
+def detail_serializer(marking):
+    d = detail_dict(marking)
+    return jsonify(d)
+
+
+def list_serializer_topic(markings):
+    d = [detail_dict_topic(p) for p in markings]
+    return jsonify(data=d)
+
+
+def list_serializer_event(markings):
+    d = [detail_dict_event(p) for p in markings]
+    return jsonify(data=d)

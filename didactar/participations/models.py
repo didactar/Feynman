@@ -16,12 +16,12 @@ class Participation(db.Model):
         return Participation.query.filter_by(id=id).first()
 
     @classmethod
-    def filter_by_event(self, event):
-        return Participation.query.filter_by(event_id=event.id)
+    def event_participation_count(self, event):
+        return Participation.query.filter_by(event_id=event.id).count()
 
     @classmethod
-    def event_participations_count(self, event):
-        return Participation.query.filter_by(event_id=event.id).count()
+    def filter_by_event(self, event):
+        return Participation.query.filter_by(event_id=event.id)
 
     @classmethod
     def filter_by_user(self, user):

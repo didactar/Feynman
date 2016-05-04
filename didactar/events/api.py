@@ -3,8 +3,8 @@ from flask import Blueprint
 from flask import request
 
 from .models import Event
-from .serializers import event_detail_serializer
-from .serializers import event_list_serializer
+from .serializers import detail_serializer
+from .serializers import list_serializer
 
 events = Blueprint('events', __name__)
 
@@ -14,14 +14,14 @@ def event_list():
 
     if request.method == 'GET':
         events = Event.all()
-        return event_list_serializer(events)
+        return list_serializer(events)
     
     if request.method == 'POST':
         try:
-            request_content = request.data.decode('utf-8')
-            data = json.loads(request_content)
-            event = Event.create(data)
-            return event_detail_serializer(event), 201
+            data = json.loads(request.data.decode('utf-8'))
+            event = Event(data)
+            event.save()
+            return detail_serializer(event), 201
         except:
             return '', 400
 
@@ -34,7 +34,7 @@ def event_detail(slug):
             event = Event.get_by_slug(slug)
             if not event:
                 return '', 404
-            return event_detail_serializer(event), 200
+            return detail_serializer(event), 200
         except:
             return '', 400
 

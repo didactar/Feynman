@@ -1,14 +1,17 @@
 [
 {
     "name": "Math",
-    "description": "About math"
-},
-{
-    "name": "Science",
-    "description": "About science"
+    "description": "Description of the topic Mathematics",
+    "avatar": "http://www.stsci.edu/~lbradley/seminar/images/sierpinski.gif"
 },
 {
     "name": "Biology",
-    "description": "About biology"
+    "description": "Description of the topic Biology",
+    "avatar": "https://d.gr-assets.com/hostedimages/1400465748ra/9679130.gif"
+},
+{
+    "name": "Cooking",
+    "description": "Description of the topic Cooking",
+    "avatar": "http://www.cooking-culinary-arts-schools.org/wp-content/uploads/2013/01/Chef-holding-chicken-entree-TS.jpg"
 }
 ]

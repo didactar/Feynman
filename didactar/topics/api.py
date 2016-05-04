@@ -3,8 +3,9 @@ from flask import Blueprint
 from flask import request
 
 from .models import Topic
-from .serializers import topic_detail_serializer
-from .serializers import topic_list_serializer
+from .serializers import detail_serializer
+from .serializers import list_serializer
+
 
 topics = Blueprint('topics', __name__)
 
@@ -13,35 +14,40 @@ topics = Blueprint('topics', __name__)
 def topic_list():
 
     if request.method == 'GET':
-        topics = Topic.all()
-        return topic_list_serializer(topics)
+        try:
+            topics = Topic.all()
+            return list_serializer(topics)
+        except:
+            return '', 400 
     
     if request.method == 'POST':
-        data = json.loads(request.data.decode('utf-8'))
-        name = data['name']
-        description = data['description']
         try:
-            topic = Topic.new(name, description)
-            return topic_detail_serializer(topic), 201
+            data = json.loads(request.data.decode('utf-8'))
+            topic = Topic(data)
+            topic.save()
+            return detail_serializer(topic), 201
         except:
             return '', 400 
 
 
-
-@topics.route('/topics/<slug>', methods=['GET', 'DELETE'])
-def topic_detail(slug):
+@topics.route('/topics/<topic_slug>', methods=['GET', 'DELETE'])
+def topic_detail(topic_slug):
 
     if request.method == 'GET':
-        topic = Topic.get(slug)
-        if topic:
-            return topic_detail_serializer(topic), 200
-        else:
-            return '', 404
+        try:
+            topic = Topic.get_by_slug(topic_slug)
+            if not topic:
+                return '', 404
+            return detail_serializer(topic)
+        except:
+            return '', 400
 
     if request.method == 'DELETE':
-        topic = Topic.get(slug)
-        if topic:
+        try:
+            topic = Topic.get_by_slug(topic_slug)
+            if not topic:
+                return '', 404
             topic.delete()
             return '', 204
-        else:
-            return '', 404
+        except:
+            return '', 400

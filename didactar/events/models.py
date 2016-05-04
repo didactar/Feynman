@@ -8,23 +8,14 @@ class Event(db.Model):
     description = db.Column(db.Text)
     slug = db.Column(db.String(1024))
 
-    def __init__(self, title, description):
-        self.title = title
-        self.description = description
-        self.slug = slugify(title, to_lower=True)
+    def __init__(self, data):
+        self.title = data['title']
+        self.description = data['description']
+        self.slug = slugify(data['title'], to_lower=True)
 
     @classmethod
     def all(self):
         return Event.query.all()
-
-    @classmethod
-    def create(self, data):
-        title = data['title']
-        description = data['description']
-        event = Event(title, description)
-        db.session.add(event)
-        db.session.commit()
-        return event
 
     @classmethod
     def get_by_slug(self, event_slug):
@@ -33,6 +24,10 @@ class Event(db.Model):
     @classmethod
     def get_by_id(self, id):
         return Event.query.filter_by(id=id).first()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
     def delete(self):
         db.session.delete(self)
