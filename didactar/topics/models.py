@@ -6,14 +6,14 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(512))
     description = db.Column(db.Text)
-    avatar = db.Column(db.String(512))
+    image = db.Column(db.String(512))
     slug = db.Column(db.String(1024))
 
     def __init__(self, data):
-        self.name = data['name']
-        self.description = data['description']
-        self.avatar = data['avatar']
-        self.slug = slugify(data['name'], to_lower=True)
+        self.name = data.get('name', '')
+        self.description = data.get('description', '')
+        self.image = data.get('image', '')
+        self.slug = slugify(data.get('name'), to_lower=True)
 
     @classmethod
     def all(self):

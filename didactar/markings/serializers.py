@@ -2,6 +2,7 @@ from flask import jsonify
 
 from didactar.events.models import Event
 from didactar.topics.models import Topic
+from didactar.participations.models import Participation
 
 
 def detail_dict(marking):
@@ -15,11 +16,13 @@ def detail_dict(marking):
 def detail_dict_event(marking):
     event_id = marking.get_event_id()
     event = Event.get_by_id(event_id)
+    p_count = Participation.event_participation_count(event)
     return {
         'id': marking.id,
         'event': {
             'slug': event.slug,
             'title': event.title,
+            'participationCount': p_count,
             'description': event.description
         }
     }
@@ -34,7 +37,7 @@ def detail_dict_topic(marking):
             'name': topic.name,
             'description': topic.description,
             'slug': topic.slug,
-            'avatar': topic.avatar
+            'image': topic.image
         }
     }
 

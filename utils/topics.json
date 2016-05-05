@@ -1,17 +1,42 @@
 [
 {
-    "name": "Math",
-    "description": "Description of the topic Mathematics",
-    "avatar": "http://www.stsci.edu/~lbradley/seminar/images/sierpinski.gif"
+    "name": "Astronomy",
+    "description": "Description of the topic Astronomy",
+    "image": "astronomy.jpg"
 },
 {
     "name": "Biology",
     "description": "Description of the topic Biology",
-    "avatar": "https://d.gr-assets.com/hostedimages/1400465748ra/9679130.gif"
+    "image": "biology.jpg"
 },
 {
     "name": "Cooking",
     "description": "Description of the topic Cooking",
-    "avatar": "http://www.cooking-culinary-arts-schools.org/wp-content/uploads/2013/01/Chef-holding-chicken-entree-TS.jpg"
+    "image": "cooking.jpg"
+},
+{
+    "name": "Literature",
+    "description": "Description of the topic Literature",
+    "image": "literature.jpg"
+},
+{
+    "name": "Music",
+    "description": "Description of the topic Music",
+    "image": "music.jpg"
+},
+{
+    "name": "Physics",
+    "description": "Description of the topic Physics",
+    "image": "physics.jpg"
+},
+{
+    "name": "Programming",
+    "description": "Description of the topic Programming",
+    "image": "programming.jpg"
+},
+{
+    "name": "Psychology",
+    "description": "Description of the topic Psychology",
+    "image": "psychology.jpg"
 }
 ]

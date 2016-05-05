@@ -40,7 +40,7 @@ def event_detail(slug):
 
     if request.method == 'DELETE':
         try:
-            event = Event.get(slug)
+            event = Event.get_by_slug(slug)
             if not event:
                 return '', 404
             event.delete()

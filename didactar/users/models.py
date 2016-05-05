@@ -10,10 +10,10 @@ class User(db.Model):
     about = db.Column(db.Text)
 
     def __init__(self, data):
-        self.name = data['name']
-        self.avatar = data['avatar']
-        self.about = data['about']
-        self.username = slugify(data['name'], to_lower=True)
+        self.name = data.get('name', '')
+        self.avatar = data.get('avatar', '')
+        self.about = data.get('about', '')
+        self.username = slugify(data.get('name', ''), to_lower=True)
 
     @classmethod
     def all(cls):

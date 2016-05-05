@@ -9,9 +9,9 @@ class Event(db.Model):
     slug = db.Column(db.String(1024))
 
     def __init__(self, data):
-        self.title = data['title']
-        self.description = data['description']
-        self.slug = slugify(data['title'], to_lower=True)
+        self.title = data.get('title', '')
+        self.description = data.get('description', '')
+        self.slug = slugify(data.get('title', ''), to_lower=True)
 
     @classmethod
     def all(self):

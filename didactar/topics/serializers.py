@@ -5,6 +5,7 @@ def topic_dict(topic):
         'id': topic.id, 
         'name': topic.name, 
         'slug': topic.slug,
+        'image': topic.image,
         'description': topic.description
     }
 
