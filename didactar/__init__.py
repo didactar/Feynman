@@ -12,12 +12,14 @@ from didactar.events.api import events
 from didactar.topics.api import topics
 from didactar.markings.api import markings
 from didactar.participations.api import participations
+from didactar.speakerships.api import speakerships 
 
 from didactar.users.models import User
 from didactar.events.models import Event
 from didactar.topics.models import Topic
 from didactar.markings.models import Marking
 from didactar.participations.models import Participation
+from didactar.speakerships.models import Speakership
 
 
 BASE_URL = 'http://127.0.0.1:5000/api/v1/'
@@ -38,7 +40,8 @@ def create_app(config_object):
     db.init_app(app)
 
     blueprints = [
-        me, users, events, topics, markings, participations
+        me, users, events, topics, markings, 
+        participations, speakerships
     ]
     for b in blueprints:
         app.register_blueprint(b, url_prefix='/api/v1')
@@ -58,7 +61,7 @@ def setup_test_app():
     app = create_test_app()
     ctx = app.app_context()
     ctx.push()
-    models = [Event, Topic, Marking, User, Participation]
+    models = [Event, Topic, Marking, User, Participation, Speakership]
     for model in models:
         for item in model.query.all():
             item.delete()
