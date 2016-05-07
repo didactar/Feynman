@@ -5,7 +5,7 @@ from didactar import create_test_app
 from didactar import create_database
 from didactar.database import db
 
-from utils.populate import populate_database
+from utils.population.populate import populate_database
 
 
 def parse_commandline_arguments():
