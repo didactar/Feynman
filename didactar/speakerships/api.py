@@ -2,8 +2,8 @@ import json
 from flask import Blueprint
 from flask import request
 
-from didactar.events.models import Event
 from didactar.users.models import User
+from didactar.events.models import Event
 
 from .models import Speakership
 from .serializers import detail_serializer
@@ -49,18 +49,6 @@ def speakership_detail(id):
             return '', 400
 
 
-@speakerships.route('/events/<event_slug>/speakerships', methods=['GET'])
-def event_speakerships(event_slug):
-    try:
-        event = Event.get_by_slug(event_slug)
-        if not event:
-            return '', 404
-        speakerships = Speakership.filter_by_event(event)
-        return list_serializer_user(speakerships)
-    except:
-        return '', 400
-
-
 @speakerships.route('/users/<username>/speakerships', methods=['GET'])
 def user_speakerships(username):
     try:
@@ -69,5 +57,18 @@ def user_speakerships(username):
             return '', 404
         speakerships = Speakership.filter_by_user(user)
         return list_serializer_event(speakerships)
+    except:
+        return '', 400
+
+
+
+@speakerships.route('/events/<event_slug>/speakerships', methods=['GET'])
+def event_speakerships(event_slug):
+    try:
+        event = Event.get_by_slug(event_slug)
+        if not event:
+            return '', 404
+        markings = Speakership.filter_by_event(event)
+        return list_serializer_user(markings), 200
     except:
         return '', 400

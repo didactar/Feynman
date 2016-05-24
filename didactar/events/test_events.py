@@ -11,9 +11,16 @@ from didactar import setup_test_app
 URL = BASE_URL + 'events'
 
 
+def populate_database():
+    with open('didactar/channels/test_channels_data.json') as f:
+        for channel in json.load(f):
+            requests.post(BASE_URL + 'channels', json=channel) 
+
+
 @pytest.fixture(scope='module')
 def setup_events():
     setup_test_app()
+    populate_database()
 
 
 def test_create_get_delete_events(setup_events):
@@ -48,6 +55,7 @@ def test_create_get_delete_events(setup_events):
         data = json.loads(r.content.decode('utf-8'))
         assert data['slug'] == slug
         assert data['description'] == event['description']
+        assert data['channel']['id'] == event['channel']['id']
 
         # delete event
         assert requests.delete(url).status_code == 204

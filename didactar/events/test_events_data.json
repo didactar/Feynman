@@ -1,14 +1,23 @@
 [
     {
         "title": "Lorem ipsum",
-        "description": "This is an event about lorems ipsums"
+        "description": "This is an event about lorems ipsums",
+        "channel": {
+            "id": 1
+        }
+    },
+    {
+        "title": "Lorem ipsum dolor",
+        "description": "This is an event about lorems ipsums dolors",
+        "channel": {
+            "id": 2
+        }
     },
     {
         "title": "Lorem ipsum dolor sit amet",
-        "description": "This is an event about lorems ipsums dolors sits amets"
-    },
-    {
-        "title": "I am the master of my fate",
-        "description": "I am the master of my soul"
+        "description": "This is an event about lorems ipsums dolors sits amets",
+        "channel": {
+            "id": 3
+        }
     }
 ]

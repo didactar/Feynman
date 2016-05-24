@@ -13,15 +13,17 @@ from didactar import setup_test_app
 
 def populate_database():
 
+    with open('didactar/channels/test_channels_data.json') as f:
+        for channel in json.load(f):
+            requests.post(BASE_URL + 'channels', json=channel) 
+
     with open('didactar/events/test_events_data.json') as f:
-        EVENTS = json.load(f)
-    for event in EVENTS:
-        requests.post(BASE_URL + 'events', json=event) 
+        for event in json.load(f):
+            requests.post(BASE_URL + 'events', json=event) 
 
     with open('didactar/topics/test_topics_data.json') as f:
-        TOPICS = json.load(f)
-    for topic in TOPICS:
-        requests.post(BASE_URL + 'topics', json=topic) 
+        for topic in json.load(f):
+            requests.post(BASE_URL + 'topics', json=topic) 
 
 
 @pytest.fixture(scope='module')

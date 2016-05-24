@@ -2,8 +2,8 @@ import json
 from flask import Blueprint
 from flask import request
 
-from didactar.events.models import Event
 from didactar.topics.models import Topic
+from didactar.events.models import Event
 
 from .models import Marking
 from .serializers import detail_serializer
@@ -59,6 +59,7 @@ def topic_markings(topic_slug):
         return list_serializer_event(markings), 200
     except:
         return '', 400
+
 
 
 @markings.route('/events/<event_slug>/markings', methods=['GET'])

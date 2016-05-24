@@ -178,5 +178,15 @@
         "name": "Ben Goldacre",
         "avatarURL": "https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2009/01/05/BenGoldacre460.jpg",
         "avatar": "ben-goldacre"
+    },
+    {
+        "name": "Jessi Knudsen",
+        "avatarURL": "https://pbs.twimg.com/profile_images/573259463399899136/Y25BwDcF.jpeg",
+        "avatar": "jessi-kundsen"
+    },
+    {
+        "name": "Henry Reich",
+        "avatarURL": "https://pbs.twimg.com/profile_images/573259463399899136/Y25BwDcF.jpeg",
+        "avatar": "henry-reich"
     }
 ]
