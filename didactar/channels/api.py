@@ -2,6 +2,9 @@ import json
 from flask import Blueprint
 from flask import request
 
+from didactar.events.serializers import list_serializer as event_list_serializer
+from didactar.events.models import Event
+
 from .models import Channel
 from .serializers import detail_serializer
 from .serializers import list_serializer
@@ -51,3 +54,15 @@ def channel_detail(channel_slug):
             return '', 204
         except:
             return '', 400
+
+
+@channels.route('/channels/<channel_slug>/events', methods=['GET'])
+def channel_events(channel_slug):
+    try:
+        channel = Channel.get_by_slug(channel_slug)
+        if not channel:
+            return '', 404
+        events = Event.filter_by_channel(channel.id)
+        return event_list_serializer(events), 200
+    except:
+        return '', 400

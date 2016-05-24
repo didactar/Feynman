@@ -22,6 +22,14 @@ class Event(db.Model):
     @classmethod
     def get_by_slug(self, event_slug):
         return Event.query.filter_by(slug=event_slug).first()
+
+    @classmethod
+    def filter_by_channel(self, channel_id):
+        return Event.query.filter_by(channel_id=channel_id)
+    
+    @classmethod
+    def get_by_id(self, id):
+        return Event.query.filter_by(id=id).first()
     
     @classmethod
     def get_by_id(self, id):
