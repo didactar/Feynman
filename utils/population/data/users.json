@@ -186,7 +186,12 @@
     },
     {
         "name": "Henry Reich",
-        "avatarURL": "https://pbs.twimg.com/profile_images/573259463399899136/Y25BwDcF.jpeg",
+        "avatarURL": "http://vidcon.com/wp-content/uploads/2015/04/HenryReich.jpg",
         "avatar": "henry-reich"
+    },
+    {
+        "name": "Emily Graslie",
+        "avatarURL": "http://stemwomenonfire.weebly.com/uploads/7/5/1/1/7511984/1130409_orig.jpg",
+        "avatar": "emily-graslie"
     }
 ]
