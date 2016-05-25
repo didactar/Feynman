@@ -14,6 +14,7 @@ class Channel(db.Model):
         self.name = data.get('name', '')
         self.description = data.get('description', '')
         self.image = data.get('image', '')
+        self.avatar = data.get('avatar', '')
         self.slug = slugify(data.get('name'), to_lower=True)
 
     @classmethod

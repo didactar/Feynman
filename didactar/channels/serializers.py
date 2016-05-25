@@ -5,6 +5,7 @@ def channel_dict(channel):
         'id': channel.id, 
         'name': channel.name, 
         'slug': channel.slug,
+        'avatar': channel.avatar,
         'image': channel.image,
         'description': channel.description
     }
