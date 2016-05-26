@@ -3,4 +3,3 @@
 .cache
 __pycache__
 config.py
-populate.py
