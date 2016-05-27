@@ -6,7 +6,7 @@ def user_dict(user):
         'username': user.username, 
         'name': user.name,
         'avatar': user.avatar,
-        'about': user.about,
+        'about': user.about
     }
 
 def user_detail_serializer(user):
@@ -14,5 +14,5 @@ def user_detail_serializer(user):
     return jsonify(s)
 
 def user_list_serializer(users):
-    data = [serializer(user) for user in users]
+    data = [user_dict(user) for user in users]
     return jsonify(data=data)
