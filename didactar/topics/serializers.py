@@ -1,6 +1,4 @@
-from flask import jsonify
-
-def topic_dict(topic):
+def topic_detail_serializer(topic):
     return {
         'id': topic.id, 
         'name': topic.name, 
@@ -10,11 +8,13 @@ def topic_dict(topic):
     }
 
 
-def detail_serializer(topic):
-    d = topic_dict(topic)
-    return jsonify(d)
-
-
-def list_serializer(topics):
-    d = [topic_dict(topic) for topic in topics]
-    return jsonify(data=d)
+def topic_list_serializer(topics):
+    return {
+        'data': [{
+            'id': topic.id, 
+            'name': topic.name, 
+            'slug': topic.slug,
+            'image': topic.image,
+            'description': topic.description
+        } for topic in topics]
+    }

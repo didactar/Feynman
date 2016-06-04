@@ -1,84 +1,86 @@
-import sys, os
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, path + '/../../')
-
-import pytest
 import requests
-from slugify import slugify
-import json
+from flask import url_for
+from fixtures import session, app
 
-from didactar import BASE_URL
-from didactar import setup_test_app
-
-
-def populate_database():
-
-    with open('didactar/channels/test_channels_data.json') as f:
-        for channel in json.load(f):
-            requests.post(BASE_URL + 'channels', json=channel) 
-
-    with open('didactar/events/test_events_data.json') as f:
-        for event in json.load(f):
-            requests.post(BASE_URL + 'events', json=event) 
-
-    with open('didactar/topics/test_topics_data.json') as f:
-        for topic in json.load(f):
-            requests.post(BASE_URL + 'topics', json=topic) 
+from didactar.channels.populate import populate_channels
+from didactar.events.populate import populate_events
+from didactar.topics.populate import populate_topics
 
 
-@pytest.fixture(scope='module')
-def setup_markings():
-    setup_test_app()
-    populate_database()
+def test_list_post(session):
+    for topic in populate_topics(1):
+        for channel in populate_channels(1):
+            for event in populate_events(channel, 1):
+                list_url = url_for('markings.marking_list')
+                raw_marking = {'topic': topic, 'event': event}
+                r = requests.post(list_url, json=raw_marking)
+                assert r.status_code == 201
+                marking = r.json()
+                assert marking['topic']['id'] == topic['id']
+                assert marking['event']['id'] == event['id']
 
 
-def test_create_get_delete_markings(setup_markings):
+def test_detail_delete(session):
+    for topic in populate_topics(1):
+        for channel in populate_channels(1):
+            for event in populate_events(channel, 1):
+                list_url = url_for('markings.marking_list')
+                raw_marking = {'topic': topic, 'event': event}
+                marking = requests.post(list_url, json=raw_marking).json()
+                detail_url = url_for('markings.marking_detail', id=marking['id'])
+                assert requests.delete(detail_url).status_code == 204
+                assert requests.delete(detail_url).status_code == 404
 
-    # get existing events and topics
-    
-    events_request = requests.get(BASE_URL + 'events')
-    events_content = events_request.content.decode('utf-8')
-    events = json.loads(events_content)['data']
-    assert len(events)
 
-    topics_request = requests.get(BASE_URL + 'topics')
-    topics_content = topics_request.content.decode('utf-8')
-    topics = json.loads(topics_content)['data']
-    assert len(topics)
+def test_get_unexisting_detail(session):
+    detail_url = url_for('markings.marking_detail', id='999')
+    assert requests.get(detail_url).status_code == 404
 
-    # create each topic for each event
-    for event in events:
-        for topic in topics:
-            list_url = BASE_URL + 'markings'
-            data = {'event': event, 'topic': topic}
-            r = requests.post(list_url, json=data)
-            assert r.status_code == 201
 
-    # check all topics for each event    
-    for event in events:
-        event_markings_url = BASE_URL + 'events/' + event['slug'] + '/markings'
-        r = requests.get(event_markings_url)
-        assert r.status_code == 200
-        request_content = r.content.decode('utf-8')
-        event_markings = json.loads(request_content)['data']
-        assert len(event_markings) == len(topics)    
+def test_detail_get(session):
+    for topic in populate_topics(1):
+        for channel in populate_channels(1):
+            for event in populate_events(channel, 1):
+                list_url = url_for('markings.marking_list')
+                raw_marking = {'topic': topic, 'event': event}
+                marking = requests.post(list_url, json=raw_marking).json()
+                detail_url = url_for('markings.marking_detail', id=marking['id'])
+                r = requests.get(detail_url)
+                assert r.status_code == 200
+                marking = r.json()
+                assert marking['topic']['id'] == topic['id']
+                assert marking['event']['id'] == event['id']
 
-    # check all events for each topic    
+
+def test_get_event_marking_list(session):
+    topics = populate_topics(2)
+    for channel in populate_channels(2):
+        events = populate_events(channel, 2)
+        for event in events:
+            for topic in topics:
+                list_url = url_for('markings.marking_list')
+                raw_marking = {'topic': topic, 'event': event}
+                requests.post(list_url, json=raw_marking)
+        for event in events:
+            event_marking_list_url = url_for('markings.event_marking_list', event_slug=event['slug'])
+            r = requests.get(event_marking_list_url)
+            assert r.status_code == 200
+            markings = r.json()['data']
+            assert len(markings) == 2
+
+
+def test_topic_marking_list(session):
+    topics = populate_topics(2)
+    for channel in populate_channels(2):
+        events = populate_events(channel, 2)
+        for event in events:
+            for topic in topics:
+                list_url = url_for('markings.marking_list')
+                raw_marking = {'topic': topic, 'event': event}
+                requests.post(list_url, json=raw_marking)
     for topic in topics:
-        topic_markings_url = BASE_URL + 'topics/' + topic['slug'] + '/markings'
-        r = requests.get(topic_markings_url)
+        topic_marking_list_url = url_for('markings.topic_marking_list', topic_slug=topic['slug'])
+        r = requests.get(topic_marking_list_url)
         assert r.status_code == 200
-        request_content = r.content.decode('utf-8')
-        topic_markings = json.loads(request_content)['data']
-        assert len(topic_markings) == len(events)
-
-    # delete all markings
-    for event in events:
-        event_markings = BASE_URL + 'events/' + event['slug'] + '/markings'
-        r = requests.get(event_markings)
-        request_content = r.content.decode('utf-8')
-        markings = json.loads(request_content)['data']
-        for m in markings:
-            marking_detail_url = '{}markings/{}'.format(BASE_URL, m['id'])
-            assert requests.delete(marking_detail_url).status_code == 204
-            assert requests.delete(marking_detail_url).status_code == 404
+        markings = r.json()['data']
+        assert len(markings) == 4

@@ -16,5 +16,11 @@
     "description": "Description of the channel General Culture",
     "avatar": "culture",
     "image": "culture"
+},
+{
+    "name": "Art",
+    "description": "Description of the channel Art",
+    "avatar": "art",
+    "image": "art"
 }
 ]

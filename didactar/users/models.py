@@ -1,5 +1,6 @@
 from slugify import slugify
-from didactar.database import db
+from database import db
+
 
 class User(db.Model):
 
@@ -8,6 +9,8 @@ class User(db.Model):
     username = db.Column(db.String(512))
     avatar = db.Column(db.String(512))
     about = db.Column(db.Text)
+    participations = db.relationship('Participation', backref='user', lazy='dynamic')
+    hostings = db.relationship('Hosting', backref='user', lazy='dynamic')
 
     def __init__(self, data):
         self.name = data.get('name', '')
@@ -16,7 +19,7 @@ class User(db.Model):
         self.username = slugify(data.get('name', ''), to_lower=True)
 
     @classmethod
-    def all(cls):
+    def get_all(cls):
         return User.query.all()
 
     @classmethod
@@ -27,6 +30,12 @@ class User(db.Model):
     def get_by_id(self, id):
         return User.query.filter_by(id=id).first()
 
+    def get_channel_participations(self, channel):
+        return self.participations.join('event', 'channel').filter_by(id=channel.id)
+
+    def get_channel_hostings(self, channel):
+        return self.hostings.join('event', 'channel').filter_by(id=channel.id)
+    
     def save(self):
         db.session.add(self)
         db.session.commit()

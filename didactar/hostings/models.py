@@ -1,19 +1,19 @@
 from database import db
 
 
-class Marking(db.Model):
+class Hosting(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, data):
         self.event_id = data.get('event').get('id')
-        self.topic_id = data.get('topic').get('id')
+        self.user_id = data.get('user').get('id')
 
     @classmethod
     def get_by_id(self, id):
-        return Marking.query.filter_by(id=id).first()
+        return Hosting.query.filter_by(id=id).first()
 
     def save(self):
         db.session.add(self)

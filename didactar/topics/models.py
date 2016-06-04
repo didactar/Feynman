@@ -1,5 +1,5 @@
 from slugify import slugify
-from didactar.database import db
+from database import db
 
 class Topic(db.Model):
 
@@ -8,6 +8,7 @@ class Topic(db.Model):
     description = db.Column(db.Text)
     image = db.Column(db.String(512))
     slug = db.Column(db.String(1024))
+    markings = db.relationship('Marking', backref='topic', lazy='dynamic')
 
     def __init__(self, data):
         self.name = data.get('name', '')
@@ -16,7 +17,7 @@ class Topic(db.Model):
         self.slug = slugify(data.get('name'), to_lower=True)
 
     @classmethod
-    def all(self):
+    def get_all(self):
         return Topic.query.all()
 
     @classmethod

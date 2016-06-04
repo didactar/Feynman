@@ -1,94 +1,95 @@
-import pytest
 import requests
-from slugify import slugify
-import json
-
-from didactar import BASE_URL
-from didactar import setup_test_app
-
-URL = BASE_URL + 'channels'
-
-@pytest.fixture(scope='module')
-def setup_channels():
-    setup_test_app()
+from flask import url_for
+from fixtures import session, app
 
 
-def test_create_get_delete_channels(setup_channels):
+def test_list_post(session):
+    raw_channel = {
+        'name': 'Science and Stuff',
+        'description': 'Description of the channel Science and Stuff',
+        'avatar': 'science-avatar',
+        'image': 'science-image'
+    }
+    channel_list_url = url_for('channels.channel_list')
+    r = requests.post(channel_list_url, json=raw_channel)
+    assert r.status_code == 201
+    data = r.json()
+    assert data['name'] == raw_channel['name']
+    assert data['description'] == raw_channel['description']
+    assert data['avatar'] == raw_channel['avatar']
+    assert data['image'] == raw_channel['image']
 
-    with open('didactar/channels/test_channels_data.json') as f:
-        CHANNELS = json.load(f)
 
-    # create channels
-    for channel in CHANNELS:
-        r = requests.post(URL, json=channel) 
-        assert r.status_code == 201
+def test_detail_delete(session):
+    raw_channel = {
+        'name': 'Science and Stuff',
+        'description': 'Description of the channel Science and Stuff',
+        'avatar': 'science-avatar',
+        'image': 'science-image'
+    }
+    channel_list_url = url_for('channels.channel_list')
+    r = requests.post(channel_list_url, json=raw_channel)
+    channel_slug = r.json()['slug']
+    channel_detail_url = url_for('channels.channel_detail', channel_slug=channel_slug)
+    assert requests.delete(channel_detail_url).status_code == 204
+    assert requests.delete(channel_detail_url).status_code == 404
 
-    # get channels list
-    r = requests.get(URL) 
+
+def test_get_unexisting_channel(session):
+    channel_detail_url = url_for('channels.channel_detail', channel_slug='unexisting_slug')
+    assert requests.get(channel_detail_url).status_code == 404
+
+
+def test_detail_get(session):
+    raw_channel = {
+        'name': 'Science and Stuff',
+        'description': 'Description of the channel Science and Stuff',
+        'avatar': 'science-avatar',
+        'image': 'science-image'
+    }
+    channel_list_url = url_for('channels.channel_list')
+    r = requests.post(channel_list_url, json=raw_channel)
+    channel_slug = r.json()['slug']
+    channel_detail_url = url_for('channels.channel_detail', channel_slug=channel_slug)
+    r = requests.get(channel_detail_url)
     assert r.status_code == 200
-
-    # check channels list length
-    r_content = r.content.decode('utf-8')
-    data = json.loads(r_content)
-    assert len(data['data']) == len(CHANNELS)
-
-    # get channel details
-    for channel in CHANNELS:
-
-        # check it exists
-        slug = slugify(channel['name'], to_lower=True)
-        url = URL + '/' + slug
-        r = requests.get(url) 
-        assert r.status_code == 200
-
-        # check correct data
-        data = json.loads(r.content.decode('utf-8'))
-        assert data['slug'] == slug
-        assert data['description'] == channel['description']
-
-        # delete channel
-        assert requests.delete(url).status_code == 204
-        assert requests.delete(url).status_code == 404
-        
+    data = r.json() 
+    assert data['name'] == raw_channel['name']
+    assert data['description'] == raw_channel['description']
+    assert data['avatar'] == raw_channel['avatar']
+    assert data['image'] == raw_channel['image']
 
 
-def test_get_unexisting_channel():
-    unexisting_channel_slugs = ['aaa','bbb','ccc']
-    for slug in unexisting_channel_slugs:
-        r = requests.get(URL + '/' + slug)
-        assert r.status_code == 404
-
-
-
-def test_create_get_delete_events(setup_channels):
-
-    # create channels
-    with open('didactar/channels/test_channels_data.json') as f:
-        for channel in json.load(f):
-            r = requests.post(URL, json=channel) 
-    r = requests.get(URL) 
-    r_content = r.content.decode('utf-8')
-    CHANNELS = json.loads(r_content)['data']
-
-
-    # load events data
-    with open('didactar/events/test_events_data.json') as f:
-        EVENTS = json.load(f)
-        assert len(EVENTS)
-
-
-    # create events for each channel
-    for channel in CHANNELS:
-        for event in EVENTS:
-            event['channel'] = channel
-            r = requests.post(BASE_URL + 'events', json=event)
-            assert r.status_code == 201
-
-    
-    # get events for each channel
-    for channel in CHANNELS:
-        r = requests.get(BASE_URL + 'channels/' + channel['slug'] + '/events')
-        assert r.status_code == 200
-        r_content = r.content.decode('utf-8')
-        events = json.loads(r_content)['data']
-        assert len(events) == len(EVENTS)
+def test_get_channels_list(session):
+    raw_channels = [
+        {
+            'name': 'Science and Stuff',
+            'description': 'Description of the channel Science and Stuff',
+            'avatar': 'science',
+            'image': 'science'
+        },
+        {
+            'name': 'Programming for beginners',
+            'description': 'Description of the channel Programming for begginers',
+            'avatar': 'programming',
+            'image': 'programming'
+        },
+        {
+            'name': 'General Culture',
+            'description': 'Description of the channel General Culture',
+            'avatar': 'culture',
+            'image': 'culture'
+        }
+    ]
+    channel_list_url = url_for('channels.channel_list')
+    for raw_channel in raw_channels:
+        requests.post(channel_list_url, json=raw_channel)
+    r = requests.get(channel_list_url)
+    assert r.status_code == 200
+    channels = r.json()['data']
+    assert len(channels) == 3
+    for raw_channel, channel in zip(raw_channels, channels):
+        assert channel['name'] == raw_channel['name']
+        assert channel['description'] == raw_channel['description']
+        assert channel['avatar'] == raw_channel['avatar']
+        assert channel['image'] == raw_channel['image']

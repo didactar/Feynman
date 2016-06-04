@@ -1,5 +1,6 @@
 from slugify import slugify
-from didactar.database import db
+from database import db
+
 
 class Channel(db.Model):
 
@@ -9,6 +10,7 @@ class Channel(db.Model):
     image = db.Column(db.String(512))
     avatar = db.Column(db.String(512))
     slug = db.Column(db.String(1024))
+    events = db.relationship('Event', backref='channel', lazy='dynamic')
 
     def __init__(self, data):
         self.name = data.get('name', '')
@@ -18,17 +20,13 @@ class Channel(db.Model):
         self.slug = slugify(data.get('name'), to_lower=True)
 
     @classmethod
-    def all(self):
+    def get_all(self):
         return Channel.query.all()
 
     @classmethod
     def get_by_slug(self, slug):
         return Channel.query.filter_by(slug=slug).first()
     
-    @classmethod
-    def get_by_id(self, id):
-        return Channel.query.filter_by(id=id).first()
-
     def save(self):
         db.session.add(self)
         db.session.commit()

@@ -1,14 +1,15 @@
 import json
 from flask import Blueprint
 from flask import request
+from flask import jsonify
 
 from didactar.topics.models import Topic
 from didactar.events.models import Event
-
 from .models import Marking
-from .serializers import detail_serializer
-from .serializers import list_serializer_event
-from .serializers import list_serializer_topic
+
+from .serializers import marking_detail_serializer
+from .serializers import event_marking_list_serializer
+from .serializers import topic_marking_list_serializer
 
 
 markings = Blueprint('markings', __name__)
@@ -16,59 +17,50 @@ markings = Blueprint('markings', __name__)
 
 @markings.route('/markings', methods=['POST'])
 def marking_list():
-    try: 
-        request_content = request.data.decode('utf-8')
-        data = json.loads(request_content)
+
+    if request.method == 'POST':
+        data = request.get_json()
         marking = Marking(data)
         marking.save()
-        return detail_serializer(marking), 201
-    except:
-        return '', 400
+        response = marking_detail_serializer(marking)
+        return jsonify(response), 201 
 
 
 @markings.route('/markings/<id>', methods=['GET', 'DELETE'])
 def marking_detail(id):
 
+    marking = Marking.get_by_id(id)
+    if not marking:
+        return '', 404
+
     if request.method == 'GET':
-        try:
-            marking = Marking.get(id)
-            if not marking:
-                return '', 404
-            return marking_detail_serializer(marking), 200
-        except:
-            return '', 400
+        response = marking_detail_serializer(marking)
+        return jsonify(response)
 
     if request.method == 'DELETE':
-        try:
-            marking = Marking.get(id)
-            if not marking:
-                return '', 404
-            marking.delete()
-            return '', 204
-        except:
-            return '', 400
-
-
-@markings.route('/topics/<topic_slug>/markings', methods=['GET'])
-def topic_markings(topic_slug):
-    try:
-        topic = Topic.get_by_slug(topic_slug)
-        if not topic:
-            return '', 404
-        markings = Marking.filter_by_topic(topic)
-        return list_serializer_event(markings), 200
-    except:
-        return '', 400
-
+        marking.delete()
+        return '', 204
 
 
 @markings.route('/events/<event_slug>/markings', methods=['GET'])
-def event_markings(event_slug):
-    try:
-        event = Event.get_by_slug(event_slug)
-        if not event:
-            return '', 404
-        markings = Marking.filter_by_event(event)
-        return list_serializer_topic(markings), 200
-    except:
-        return '', 400
+def event_marking_list(event_slug):
+
+    event = Event.get_by_slug(event_slug)
+    if not event:
+        return '', 404
+
+    if request.method == 'GET':
+        response = event_marking_list_serializer(event.markings)
+        return jsonify(response) 
+
+
+@markings.route('/topics/<topic_slug>/markings', methods=['GET'])
+def topic_marking_list(topic_slug):
+
+    topic = Topic.get_by_slug(topic_slug)
+    if not topic:
+        return '', 404
+
+    if request.method == 'GET':
+        response = topic_marking_list_serializer(topic.markings)
+        return jsonify(response)

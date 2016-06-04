@@ -1,10 +1,13 @@
-import json
 from flask import Blueprint
 from flask import request
+from flask import jsonify
+from flask import url_for
 
 from .models import User
+
 from .serializers import user_detail_serializer
 from .serializers import user_list_serializer
+
 
 users = Blueprint('users', __name__)
 
@@ -13,38 +16,30 @@ users = Blueprint('users', __name__)
 def user_list():
 
     if request.method == 'GET':
-        users = User.all()
-        return user_list_serializer(users)
-    
+        users = User.get_all()
+        response = user_list_serializer(users)
+        return jsonify(response)
+
     if request.method == 'POST':
-        try:
-            data = json.loads(request.data.decode('utf-8'))
-            user = User(data)
-            user.save()
-            return user_detail_serializer(user), 201
-        except:
-            return '', 400 
+        data = request.get_json()
+        user = User(data)
+        user.save()
+        response = user_detail_serializer(user)
+        return jsonify(response), 201
 
 
 
 @users.route('/users/<username>', methods=['GET', 'DELETE'])
 def user_detail(username):
 
+    user = User.get_by_username(username)
+    if not user:
+        return '', 404
+
     if request.method == 'GET':
-        try:
-            user = User.get_by_username(username)
-            if not user:
-                return '', 404
-            return user_detail_serializer(user), 200
-        except:
-            return '', 400
+        response = user_detail_serializer(user)
+        return jsonify(response) 
 
     if request.method == 'DELETE':
-        try:
-            user = User.get_by_username(username)
-            if not user:
-                return '', 404
-            user.delete()
-            return '', 204
-        except:
-            return '', 400
+        user.delete()
+        return '', 204

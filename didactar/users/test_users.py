@@ -1,63 +1,57 @@
-import sys, os
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, path + '/../../')
-
-import pytest
 import requests
-from slugify import slugify
-import json
-
-from didactar import BASE_URL
-from didactar import setup_test_app
-
-URL = BASE_URL + 'users'
+from flask import url_for
+from fixtures import session, app
+from .populate import populate_users
 
 
-@pytest.fixture(scope='module')
-def setup_users():
-    setup_test_app()
+def test_list_post(session):
+    raw_user = {
+        'name': 'Carl Sagan',
+        'avatar': 'carl-sagan'
+    }
+    user_list_url = url_for('users.user_list')
+    r = requests.post(user_list_url, json=raw_user)
+    assert r.status_code == 201
+    data = r.json()
+    assert data['name'] == raw_user['name']
+    assert data['avatar'] == raw_user['avatar']
 
 
-def test_create_get_delete_users(setup_users):
+def test_detail_delete(session):
+    populate_users(1)
+    user_list_url = url_for('users.user_list')
+    users = requests.get(user_list_url).json()['data']
+    for user in users:
+        user_detail_url = url_for('users.user_detail', username=user['username'])
+        assert requests.delete(user_detail_url).status_code == 204
+        assert requests.delete(user_detail_url).status_code == 404
 
-    with open('didactar/users/test_users_data.json') as f:
-        USERS = json.load(f)
 
-    # create items
-    for user in USERS:
-        r = requests.post(URL, json=user) 
-        assert r.status_code == 201
+def test_get_unexisting_user(session):
+    user_detail_url = url_for('users.user_detail', username='unexisting_username')
+    assert requests.get(user_detail_url).status_code == 404
 
-    # get list
-    r = requests.get(URL) 
+
+def test_detail_get(session):
+    raw_user = {
+        'name': 'Carl Sagan',
+        'avatar': 'carl-sagan'
+    }
+    user_list_url = url_for('users.user_list')
+    r = requests.post(user_list_url, json=raw_user)
+    username = r.json()['username']
+    user_detail_url = url_for('users.user_detail', username=username)
+    r = requests.get(user_detail_url)
     assert r.status_code == 200
+    data = r.json() 
+    assert data['name'] == raw_user['name']
+    assert data['avatar'] == raw_user['avatar']
 
-    # check list length
-    r_content = r.content.decode('utf-8')
-    data = json.loads(r_content)
-    assert len(data['data']) == len(USERS)
 
-    # get details
-    for user in USERS:
-
-        # check it exists
-        username = slugify(user['name'], to_lower=True)
-        url = URL + '/' + username
-        r = requests.get(url) 
-        assert r.status_code == 200
-
-        # check correct data
-        data = json.loads(r.content.decode('utf-8'))
-        assert data['username'] == username
-        assert data['avatar'] == user['avatar']
-
-        # delete item
-        assert requests.delete(url).status_code == 204
-        assert requests.delete(url).status_code == 404
-        
-
-def test_get_unexisting_user():
-    unexisting_usernames = ['aaa','bbb','ccc']
-    for username in unexisting_usernames:
-        r = requests.get(URL + '/' + username)
-        assert r.status_code == 404
+def test_get_users_list(session):
+    populate_users(3)
+    user_list_url = url_for('users.user_list')
+    r = requests.get(user_list_url)
+    assert r.status_code == 200
+    data = r.json()['data']
+    assert len(data) == 3

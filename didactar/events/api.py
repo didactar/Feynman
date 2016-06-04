@@ -1,49 +1,52 @@
 import json
+from flask import jsonify
 from flask import Blueprint
 from flask import request
 
+from didactar.channels.models import Channel
 from .models import Event
-from .serializers import detail_serializer
-from .serializers import list_serializer
+
+from .serializers import event_detail_serializer
+from .serializers import event_list_serializer
+
 
 events = Blueprint('events', __name__)
 
 
-@events.route('/events', methods=['GET', 'POST'])
+@events.route('/events', methods=['POST'])
 def event_list():
 
-    if request.method == 'GET':
-        events = Event.all()
-        return list_serializer(events)
-    
     if request.method == 'POST':
-        try:
-            data = json.loads(request.data.decode('utf-8'))
-            event = Event(data)
-            event.save()
-            return detail_serializer(event), 201
-        except:
-            return '', 400
+        data = request.get_json()
+        event = Event(data)
+        event.save()
+        response = event_detail_serializer(event)
+        return jsonify(response), 201
 
 
-@events.route('/events/<slug>', methods=['GET', 'DELETE'])
-def event_detail(slug):
+@events.route('/events/<event_slug>', methods=['GET', 'DELETE'])
+def event_detail(event_slug):
+
+    event = Event.get_by_slug(event_slug)
+    if not event:
+        return '', 404
 
     if request.method == 'GET':
-        try:
-            event = Event.get_by_slug(slug)
-            if not event:
-                return '', 404
-            return detail_serializer(event), 200
-        except:
-            return '', 400
+        response = event_detail_serializer(event)
+        return jsonify(response) 
 
     if request.method == 'DELETE':
-        try:
-            event = Event.get_by_slug(slug)
-            if not event:
-                return '', 404
-            event.delete()
-            return '', 204
-        except:
-            return '', 400
+        event.delete()
+        return '', 204
+
+
+@events.route('/channels/<channel_slug>/events', methods=['GET'])
+def channel_event_list(channel_slug):
+
+    channel = Channel.get_by_slug(channel_slug)
+    if not channel:
+        return '', 404
+
+    if request.method == 'GET':
+        response = event_list_serializer(channel.events)
+        return jsonify(response)

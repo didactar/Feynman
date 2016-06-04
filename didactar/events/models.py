@@ -1,19 +1,23 @@
 from slugify import slugify
-from didactar.database import db
+from database import db
+
 
 class Event(db.Model):
-    
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(512))
-    description = db.Column(db.Text)
-    slug = db.Column(db.String(1024))
-    channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'))
 
-    def __init__(self, data):
-        self.title = data.get('title', '')
-        self.description = data.get('description', '')
-        self.slug = slugify(data.get('title', ''), to_lower=True)
-        self.channel_id = data['channel']['id']
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(512), nullable=False)
+    slug = db.Column(db.String(1024), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
+    description = db.Column(db.Text)
+    participations = db.relationship('Participation', backref='event', lazy='dynamic')
+    hostings = db.relationship('Hosting', backref='event', lazy='dynamic')
+    markings = db.relationship('Marking', backref='event', lazy='dynamic')
+
+    def __init__(self, event_data):
+        self.title = event_data.get('title')
+        self.description = event_data.get('description')
+        self.slug = slugify(event_data.get('title'), to_lower=True)
+        self.channel_id = event_data.get('channel').get('id')
 
     @classmethod
     def all(self):
@@ -23,17 +27,9 @@ class Event(db.Model):
     def get_by_slug(self, event_slug):
         return Event.query.filter_by(slug=event_slug).first()
 
-    @classmethod
-    def filter_by_channel(self, channel_id):
-        return Event.query.filter_by(channel_id=channel_id)
-    
-    @classmethod
-    def get_by_id(self, id):
-        return Event.query.filter_by(id=id).first()
-    
-    @classmethod
-    def get_by_id(self, id):
-        return Event.query.filter_by(id=id).first()
+    @property
+    def participations_count(self):
+        return self.participations.count()
 
     def save(self):
         db.session.add(self)

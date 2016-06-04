@@ -1,12 +1,12 @@
-def participation_serializer(participation):
+def hosting_serializer(hosting):
     return {
-        'id': participation.id,
-        'event': {'id': participation.event.id},
-        'user': {'id': participation.user.id}
+        'id': hosting.id,
+        'event': {'id': hosting.event.id},
+        'user': {'id': hosting.user.id}
    }
 
 
-def user_participation_list_serializer(participations):
+def user_hosting_list_serializer(hostings):
     return {
         'data': [{
             'id': p.id,
@@ -33,11 +33,11 @@ def user_participation_list_serializer(participations):
                     }
                 } for s in p.event.hostings]
             }
-        } for p in participations]
+        } for p in hostings]
     }
 
 
-def event_participation_list_serializer(participations):
+def event_hosting_list_serializer(hostings):
     return {
         'data': [{
             'id': p.id,
@@ -48,5 +48,5 @@ def event_participation_list_serializer(participations):
                 'about': p.user.about,
                 'avatar': p.user.avatar
             }
-        } for p in participations]
+        } for p in hostings]
     }

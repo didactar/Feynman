@@ -1,13 +1,12 @@
-import json
 from flask import Blueprint
 from flask import request
-
-from didactar.events.serializers import list_serializer as event_list_serializer
-from didactar.events.models import Event
+from flask import jsonify
+from flask import url_for
 
 from .models import Channel
-from .serializers import detail_serializer
-from .serializers import list_serializer
+
+from .serializers import channel_detail_serializer
+from .serializers import channel_list_serializer
 
 
 channels = Blueprint('channels', __name__)
@@ -17,52 +16,30 @@ channels = Blueprint('channels', __name__)
 def channel_list():
 
     if request.method == 'GET':
-        try:
-            channels = Channel.all()
-            return list_serializer(channels)
-        except:
-            return '', 400 
-    
+        channels = Channel.get_all()
+        response = channel_list_serializer(channels)
+        return jsonify(response)
+
     if request.method == 'POST':
-        try:
-            data = json.loads(request.data.decode('utf-8'))
-            channel = Channel(data)
-            channel.save()
-            return detail_serializer(channel), 201
-        except:
-            return '', 400 
+        data = request.get_json()
+        channel = Channel(data)
+        channel.save()
+        response = channel_detail_serializer(channel)
+        return jsonify(response), 201
+
 
 
 @channels.route('/channels/<channel_slug>', methods=['GET', 'DELETE'])
 def channel_detail(channel_slug):
 
+    channel = Channel.get_by_slug(channel_slug)
+    if not channel:
+        return '', 404
+
     if request.method == 'GET':
-        try:
-            channel = Channel.get_by_slug(channel_slug)
-            if not channel:
-                return '', 404
-            return detail_serializer(channel)
-        except:
-            return '', 400
+        response = channel_detail_serializer(channel)
+        return jsonify(response) 
 
     if request.method == 'DELETE':
-        try:
-            channel = Channel.get_by_slug(channel_slug)
-            if not channel:
-                return '', 404
-            channel.delete()
-            return '', 204
-        except:
-            return '', 400
-
-
-@channels.route('/channels/<channel_slug>/events', methods=['GET'])
-def channel_events(channel_slug):
-    try:
-        channel = Channel.get_by_slug(channel_slug)
-        if not channel:
-            return '', 404
-        events = Event.filter_by_channel(channel.id)
-        return event_list_serializer(events), 200
-    except:
-        return '', 400
+        channel.delete()
+        return '', 204

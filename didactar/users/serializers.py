@@ -1,18 +1,20 @@
-from flask import jsonify
-
-def user_dict(user):
+def user_detail_serializer(user):
     return {
         'id': user.id, 
-        'username': user.username, 
-        'name': user.name,
+        'name': user.name, 
+        'username': user.username,
         'avatar': user.avatar,
         'about': user.about
     }
 
-def user_detail_serializer(user):
-    s = user_dict(user)
-    return jsonify(s)
 
 def user_list_serializer(users):
-    data = [user_dict(user) for user in users]
-    return jsonify(data=data)
+    return {
+        'data': [{
+            'id': user.id, 
+            'name': user.name, 
+            'username': user.username,
+            'avatar': user.avatar,
+            'about': user.about
+        } for user in users]
+    }

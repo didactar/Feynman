@@ -1,51 +1,51 @@
-from flask import jsonify
-
-from didactar.events.models import Event
-from didactar.topics.models import Topic
-from didactar.events.serializers import event_dict
-
-
-def detail_dict(marking):
+def marking_detail_serializer(marking):
     return {
         'id': marking.id,
-        'event': {'id': marking.event_id},
-        'topic': {'id': marking.topic_id}
+        'event': {'id': marking.event.id},
+        'topic': {'id': marking.topic.id}
     }
 
 
-def detail_dict_event(marking):
-    event_id = marking.get_event_id()
-    event = Event.get_by_id(event_id)
+def event_marking_list_serializer(markings):
     return {
-        'id': marking.id,
-        'event': event_dict(event)
+        'data': [{
+            'id': m.id,
+            'topic': {
+                'id': m.topic.id,
+                'name': m.topic.name,
+                'description': m.topic.description,
+                'slug': m.topic.slug,
+                'image': m.topic.image
+            } 
+        } for m in markings]
     }
 
 
-def detail_dict_topic(marking):
-    topic_id = marking.get_topic_id()
-    topic = Topic.get_by_id(topic_id)
+def topic_marking_list_serializer(markings):
     return {
-        'id': marking.id,
-        'topic': {
-            'name': topic.name,
-            'description': topic.description,
-            'slug': topic.slug,
-            'image': topic.image
-        }
+        'data': [{
+            'id': m.id,
+            'event': {
+                'id': m.event.id, 
+                'title': m.event.title, 
+                'slug': m.event.slug,
+                'channel': {
+                    'id': m.event.channel.id,
+                    'slug': m.event.channel.slug,
+                    'name': m.event.channel.name,
+                    'avatar': m.event.channel.avatar
+                },
+                'description': m.event.description,
+                'participationCount': m.event.participations_count,
+                'hosts': [{
+                    'id': s.id,
+                    'user': {
+                        'username': s.user.username,
+                        'name': s.user.name,
+                        'about': s.user.about,
+                        'avatar': s.user.avatar
+                    }
+                } for s in m.event.hostings]
+            } 
+        } for m in markings]
     }
-
-
-def detail_serializer(marking):
-    d = detail_dict(marking)
-    return jsonify(d)
-
-
-def list_serializer_topic(markings):
-    d = [detail_dict_topic(p) for p in markings]
-    return jsonify(data=d)
-
-
-def list_serializer_event(markings):
-    d = [detail_dict_event(p) for p in markings]
-    return jsonify(data=d)

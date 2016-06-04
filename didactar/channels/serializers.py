@@ -1,6 +1,4 @@
-from flask import jsonify
-
-def channel_dict(channel):
+def channel_detail_serializer(channel):
     return {
         'id': channel.id, 
         'name': channel.name, 
@@ -11,11 +9,14 @@ def channel_dict(channel):
     }
 
 
-def detail_serializer(channel):
-    d = channel_dict(channel)
-    return jsonify(d)
-
-
-def list_serializer(channels):
-    d = [channel_dict(channel) for channel in channels]
-    return jsonify(data=d)
+def channel_list_serializer(channels):
+    return {
+        'data': [{
+            'id': channel.id, 
+            'name': channel.name, 
+            'slug': channel.slug,
+            'avatar': channel.avatar,
+            'image': channel.image,
+            'description': channel.description
+        } for channel in channels]
+    }
