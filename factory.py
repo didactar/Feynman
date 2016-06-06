@@ -10,11 +10,9 @@ from didactar.channels.api import channels
 from didactar.topics.api import topics
 from didactar.markings.api import markings
 from didactar.participations.api import participations
-from didactar.hostings.api import hostings 
 
 
-BLUEPRINTS = [me, users, events, topics, channels, markings, 
-              participations, hostings]
+BLUEPRINTS = [me, users, events, topics, channels, markings, participations]
 
 
 def create_app(config_object):

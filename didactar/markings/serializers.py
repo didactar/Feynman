@@ -36,16 +36,7 @@ def topic_marking_list_serializer(markings):
                     'avatar': m.event.channel.avatar
                 },
                 'description': m.event.description,
-                'participationCount': m.event.participations_count,
-                'hosts': [{
-                    'id': s.id,
-                    'user': {
-                        'username': s.user.username,
-                        'name': s.user.name,
-                        'about': s.user.about,
-                        'avatar': s.user.avatar
-                    }
-                } for s in m.event.hostings]
+                'participationCount': m.event.participations_count
             } 
         } for m in markings]
     }

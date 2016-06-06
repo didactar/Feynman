@@ -21,17 +21,7 @@ def user_participation_list_serializer(participations):
                     'avatar': p.event.channel.avatar
                 },
                 'description': p.event.description,
-                'participationCount': p.event.participations_count,
-                'hostings': [{
-                    'id': s.id,
-                    'user': {
-                        'id': p.user.id,
-                        'username': s.user.username,
-                        'name': s.user.name,
-                        'about': s.user.about,
-                        'avatar': s.user.avatar
-                    }
-                } for s in p.event.hostings]
+                'participationCount': p.event.participations_count
             }
         } for p in participations]
     }

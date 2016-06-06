@@ -10,16 +10,7 @@ def event_detail_serializer(event):
             'avatar': event.channel.avatar
         },
         'description': event.description,
-        'participationCount': event.participations_count,
-        'hosts': [{
-            'id': s.id,
-            'user': {
-                'username': s.user.username,
-                'name': s.user.name,
-                'about': s.user.about,
-                'avatar': s.user.avatar
-            }
-        } for s in event.hostings]
+        'participationCount': event.participations_count
     }
 
 
@@ -36,15 +27,6 @@ def event_list_serializer(events):
                 'avatar': event.channel.avatar
             },
             'description': event.description,
-            'participationCount': event.participations_count,
-            'hosts': [{
-                'id': s.id,
-                'user': {
-                    'username': s.user.username,
-                    'name': s.user.name,
-                    'about': s.user.about,
-                    'avatar': s.user.avatar
-                }
-            } for s in event.hostings]
+            'participationCount': event.participations_count
         } for event in events]
     }

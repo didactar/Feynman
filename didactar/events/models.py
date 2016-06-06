@@ -10,7 +10,6 @@ class Event(db.Model):
     channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
     description = db.Column(db.Text)
     participations = db.relationship('Participation', backref='event', lazy='dynamic')
-    hostings = db.relationship('Hosting', backref='event', lazy='dynamic')
     markings = db.relationship('Marking', backref='event', lazy='dynamic')
 
     def __init__(self, event_data):

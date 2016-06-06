@@ -8,7 +8,6 @@ from didactar.topics.populate import populate_topics
 from didactar.events.populate import populate_events
 from didactar.markings.populate import populate_markings
 from didactar.participations.populate import populate_participations
-from didactar.hostings.populate import populate_hostings
 
 
 
@@ -25,8 +24,6 @@ def populate_db():
         for event in events:
             print('    populating markings...')
             populate_markings(event, topics, 5)
-            print('    populating hostings...')
-            populate_hostings(event, users, 5)
             print('    populating participations...')
             populate_participations(event, users, 5)
 
