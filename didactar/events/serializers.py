@@ -6,8 +6,7 @@ def event_detail_serializer(event):
         'channel': {
             'id': event.channel.id,
             'slug': event.channel.slug,
-            'name': event.channel.name,
-            'avatar': event.channel.avatar
+            'name': event.channel.name
         },
         'description': event.description,
         'participationCount': event.participations_count
@@ -23,8 +22,7 @@ def event_list_serializer(events):
             'channel': {
                 'id': event.channel.id,
                 'slug': event.channel.slug,
-                'name': event.channel.name,
-                'avatar': event.channel.avatar
+                'name': event.channel.name
             },
             'description': event.description,
             'participationCount': event.participations_count
