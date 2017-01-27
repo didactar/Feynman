@@ -1,0 +1,6 @@
+DEVELOPMENT=True
+DEBUG=True
+TESTING=False
+SQL_URI=sqlite:////tmp/didactar.db
+SECRET_KEY=642342647b264d09b5db4facc4b3124fa8ac8f5781ad2319
+SERVER_NAME=localhost:5000

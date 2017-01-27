@@ -1,23 +1,20 @@
 import pytest
 from database import db
-from config import TestConfig
 from factory import create_app
 
 
-@pytest.yield_fixture(scope='session')
+@pytest.fixture(scope='session')
 def app():
-    config_object = TestConfig()
-    app = create_app(config_object)
-    ctx = app.app_context()
-    ctx.push()
-    db.app = app
-    db.drop_all()
-    yield
-    ctx.pop()
-
+    _app = create_app()
+    with _app.app_context():
+        yield _app
+ 
 
 @pytest.yield_fixture(scope='function')
 def session(app):
     db.create_all()
     yield
     db.drop_all()
+
+
+URL_PREFIX = 'http://localhost:5000/api/v1/'

@@ -1,11 +1,10 @@
 from database import db
-from config import DevelopConfig
 from factory import create_app
 
-from didactar.users.populate import populate_users
-from didactar.channels.populate import populate_channels
-from didactar.events.populate import populate_events
-from didactar.participations.populate import populate_participations
+from feynman.users.populate import populate_users
+from feynman.channels.populate import populate_channels
+from feynman.events.populate import populate_events
+from feynman.participations.populate import populate_participations
 
 
 
@@ -30,8 +29,7 @@ def reset_db():
 
 
 if __name__ == '__main__':
-    config_object = DevelopConfig()
-    app = create_app(config_object)
+    app = create_app()
     with app.app_context():
         reset_db()
         populate_db()
