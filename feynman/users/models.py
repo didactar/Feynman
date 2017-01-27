@@ -56,3 +56,25 @@ class User(db.Model):
         return {
             'data': [user.serialize() for user in users]
         }
+
+    def settings(self):
+        return {
+            'id': self.id, 
+            'username': self.username, 
+            'name': self.name,
+            'avatar': self.avatar,
+            'about': self.about,
+            'language': 'EN',
+            'timezone': 'x',
+            'email': 'asimov@feynman.com',
+            'emailFrequency': 'daily'
+        }
+
+    def preferences(self):
+        return {
+            'username': self.username, 
+            'name': self.name,
+            'avatar': self.avatar,
+            'language': 'EN',
+            'timezone': 'x'
+        }
