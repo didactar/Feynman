@@ -1,15 +1,8 @@
-from flask import Blueprint
 from flask import request
 from flask import jsonify
-from flask import url_for
-
 from .models import User
+from . import users
 
-from .serializers import user_detail_serializer
-from .serializers import user_list_serializer
-
-
-users = Blueprint('users', __name__)
 
 
 @users.route('/users', methods=['GET', 'POST'])
@@ -17,14 +10,14 @@ def user_list():
 
     if request.method == 'GET':
         users = User.get_all()
-        response = user_list_serializer(users)
+        response = User.serialize_list(users)
         return jsonify(response)
 
     if request.method == 'POST':
         data = request.get_json()
         user = User(data)
         user.save()
-        response = user_detail_serializer(user)
+        response = user.serialize()
         return jsonify(response), 201
 
 
@@ -32,14 +25,16 @@ def user_list():
 @users.route('/users/<username>', methods=['GET', 'DELETE'])
 def user_detail(username):
 
-    user = User.get_by_username(username)
-    if not user:
+    if request.method == 'GET':
+        user = User.get_by_username(username)
+        if user:
+            response = user.serialize()
+            return jsonify(response) 
         return '', 404
 
-    if request.method == 'GET':
-        response = user_detail_serializer(user)
-        return jsonify(response) 
-
     if request.method == 'DELETE':
-        user.delete()
-        return '', 204
+        user = User.get_by_username(username)
+        if user:
+            user.delete()
+            return '', 204
+        return '', 404

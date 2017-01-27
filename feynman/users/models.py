@@ -15,7 +15,7 @@ class User(db.Model):
         self.name = data.get('name', '')
         self.avatar = data.get('avatar', '')
         self.about = data.get('about', '')
-        self.username = slugify(data.get('name', ''), to_lower=True)
+        self.username = slugify(data.get('name', ''))
 
     @classmethod
     def get_all(cls):
@@ -29,8 +29,10 @@ class User(db.Model):
     def get_by_id(self, id):
         return User.query.filter_by(id=id).first()
 
-    def get_channel_participations(self, channel):
-        return self.participations.join('event', 'channel').filter_by(id=channel.id)
+    def get_participations(self, channel=None):
+        if channel:
+            return self.participations.join('event', 'channel').filter_by(id=channel.id)
+        return self.participations
     
     def save(self):
         db.session.add(self)
@@ -39,3 +41,18 @@ class User(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def serialize(self):
+        return {
+            'id': self.id, 
+            'name': self.name, 
+            'username': self.username,
+            'avatar': self.avatar,
+            'about': self.about
+        }
+
+    @classmethod
+    def serialize_list(self, users):
+        return {
+            'data': [user.serialize() for user in users]
+        }

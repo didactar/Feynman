@@ -1,7 +1,6 @@
 import requests
-from flask import url_for
-from fixtures import session, app
-from .populate import populate_users
+from conftest import session, URL_PREFIX
+from feynman.users.utils.populate import populate_users
 
 
 def test_list_post(session):
@@ -9,8 +8,7 @@ def test_list_post(session):
         'name': 'Carl Sagan',
         'avatar': 'carl-sagan'
     }
-    user_list_url = url_for('users.user_list')
-    r = requests.post(user_list_url, json=raw_user)
+    r = requests.post(URL_PREFIX + 'users', json=raw_user)
     assert r.status_code == 201
     data = r.json()
     assert data['name'] == raw_user['name']
@@ -19,17 +17,16 @@ def test_list_post(session):
 
 def test_detail_delete(session):
     populate_users(1)
-    user_list_url = url_for('users.user_list')
-    users = requests.get(user_list_url).json()['data']
+    users = requests.get(URL_PREFIX + 'users').json()['data']
     for user in users:
-        user_detail_url = url_for('users.user_detail', username=user['username'])
+        user_detail_url = URL_PREFIX + 'users/' + user['username']
         assert requests.delete(user_detail_url).status_code == 204
         assert requests.delete(user_detail_url).status_code == 404
 
 
 def test_get_unexisting_user(session):
-    user_detail_url = url_for('users.user_detail', username='unexisting_username')
-    assert requests.get(user_detail_url).status_code == 404
+    r = requests.get(URL_PREFIX + 'users/unexisting')
+    assert r.status_code == 404
 
 
 def test_detail_get(session):
@@ -37,11 +34,9 @@ def test_detail_get(session):
         'name': 'Carl Sagan',
         'avatar': 'carl-sagan'
     }
-    user_list_url = url_for('users.user_list')
-    r = requests.post(user_list_url, json=raw_user)
+    r = requests.post(URL_PREFIX + 'users', json=raw_user)
     username = r.json()['username']
-    user_detail_url = url_for('users.user_detail', username=username)
-    r = requests.get(user_detail_url)
+    r = requests.get(URL_PREFIX + 'users/' + username)
     assert r.status_code == 200
     data = r.json() 
     assert data['name'] == raw_user['name']
@@ -50,8 +45,7 @@ def test_detail_get(session):
 
 def test_get_users_list(session):
     populate_users(3)
-    user_list_url = url_for('users.user_list')
-    r = requests.get(user_list_url)
+    r = requests.get(URL_PREFIX + 'users')
     assert r.status_code == 200
     data = r.json()['data']
     assert len(data) == 3
