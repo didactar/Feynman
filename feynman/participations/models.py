@@ -54,11 +54,11 @@ class Participation(db.Model):
                     'id': p.event.id, 
                     'title': p.event.title, 
                     'slug': p.event.slug,
-                    'channel': {
-                        'id': p.event.channel.id,
-                        'slug': p.event.channel.slug,
-                        'name': p.event.channel.name,
-                        'avatar': p.event.channel.avatar
+                    'workshop': {
+                        'id': p.event.workshop.id,
+                        'slug': p.event.workshop.slug,
+                        'name': p.event.workshop.name,
+                        'avatar': p.event.workshop.avatar
                     },
                     'description': p.event.description,
                     'participationCount': p.event.participations_count

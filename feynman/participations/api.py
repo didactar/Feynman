@@ -1,7 +1,7 @@
 from flask import request
 from flask import jsonify
 from feynman.users.models import User
-from feynman.channels.models import Channel
+from feynman.workshops.models import Workshop
 from feynman.events.models import Event
 from .models import Participation
 from . import participations
@@ -57,9 +57,9 @@ def user_participation_list(username):
     if request.method == 'GET':
         user = User.get_by_username(username)
         if user:
-            channel_slug = request.args.get('channel')
-            channel = Channel.get_by_slug(channel_slug) if channel_slug else None
-            participations = user.get_participations(channel)
+            workshop_slug = request.args.get('workshop')
+            workshop = Workshop.get_by_slug(workshop_slug) if workshop_slug else None
+            participations = user.get_participations(workshop)
             response = Participation.serialize_user_participations_list(participations)
             return jsonify(response)
         return '', 404

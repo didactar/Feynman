@@ -4,7 +4,7 @@ from feynman.participations.utils.populate import prepopulate
 
 
 def test_list_post(session):
-    users, channels, events = prepopulate()
+    users, workshops, events = prepopulate()
     for event in events:
         for user in users:
             raw_participation = {'user': user, 'event': event}
@@ -16,7 +16,7 @@ def test_list_post(session):
 
 
 def test_detail_delete(session):
-    users, channels, events = prepopulate()
+    users, workshops, events = prepopulate()
     for user in users:
         for event in events:
             raw_participation = {'user': user, 'event': event}
@@ -32,7 +32,7 @@ def test_get_unexisting_detail(session):
 
 
 def test_detail_get(session):
-    users, channels, events = prepopulate()
+    users, workshops, events = prepopulate()
     for event in events:
         for user in users:
             raw_participation = {'user': user, 'event': event}
@@ -46,7 +46,7 @@ def test_detail_get(session):
 
 
 def test_get_event_participation_list(session):
-    users, channels, events = prepopulate()
+    users, workshops, events = prepopulate()
     for event in events:
         for user in users:
             raw_participation = {'user': user, 'event': event}
@@ -58,7 +58,7 @@ def test_get_event_participation_list(session):
 
 
 def test_user_participation_list(session):
-    users, channels, events = prepopulate()
+    users, workshops, events = prepopulate()
     for user in users:
         for event in events:
             raw_participation = {'user': user, 'event': event}
@@ -69,14 +69,14 @@ def test_user_participation_list(session):
         assert len(participations) == 2
 
 
-def test_user_channel_participation_list(session):
-    users, channels, events = prepopulate()
+def test_user_workshop_participation_list(session):
+    users, workshops, events = prepopulate()
     for user in users:
         for event in events:
             raw_participation = {'user': user, 'event': event}
             requests.post(URL_PREFIX + 'participations', json=raw_participation)
-        for channel in channels:
-            r = requests.get(URL_PREFIX + 'users/' + user['username'] + '/participations?channel=' + channel['slug'])
+        for workshop in workshops:
+            r = requests.get(URL_PREFIX + 'users/' + user['username'] + '/participations?workshop=' + workshop['slug'])
             assert r.status_code == 200
             participations = r.json()['data']
             assert len(participations) == 2

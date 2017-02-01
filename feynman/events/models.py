@@ -7,7 +7,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512), nullable=False)
     slug = db.Column(db.String(1024), nullable=False)
-    channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
+    workshop_id = db.Column(db.Integer, db.ForeignKey('workshop.id'), nullable=False)
     description = db.Column(db.Text)
     participations = db.relationship('Participation', backref='event', lazy='dynamic')
 
@@ -15,7 +15,7 @@ class Event(db.Model):
         self.title = event_data.get('title')
         self.description = event_data.get('description')
         self.slug = slugify(event_data.get('title'))
-        self.channel_id = event_data.get('channel').get('id')
+        self.workshop_id = event_data.get('workshop').get('id')
 
     @classmethod
     def get_all(self):
@@ -42,10 +42,10 @@ class Event(db.Model):
             'id': self.id, 
             'title': self.title, 
             'slug': self.slug,
-            'channel': {
-                'id': self.channel.id,
-                'slug': self.channel.slug,
-                'name': self.channel.name
+            'workshop': {
+                'id': self.workshop.id,
+                'slug': self.workshop.slug,
+                'name': self.workshop.name
             },
             'description': self.description,
             'participationCount': self.participations_count

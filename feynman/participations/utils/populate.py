@@ -3,16 +3,16 @@ from flask import url_for
 from conftest import URL_PREFIX
 from feynman.users.utils.populate import populate_users
 from feynman.events.utils.populate import populate_events
-from feynman.channels.utils.populate import populate_channels
+from feynman.workshops.utils.populate import populate_workshops
 
 
 def prepopulate():
     users = populate_users(2)
-    channels = populate_channels(1)
-    for channel in channels:
-        populate_events(channel, 2)
+    workshops = populate_workshops(1)
+    for workshop in workshops:
+        populate_events(workshop, 2)
     events = requests.get(URL_PREFIX + 'events').json()['data']
-    return users, channels, events
+    return users, workshops, events
 
 
 def populate_participations(event, users, ammount=None):

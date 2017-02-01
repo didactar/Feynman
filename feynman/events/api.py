@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask import request
 from .models import Event
-from feynman.channels.models import Channel
+from feynman.workshops.models import Workshop
 from . import events
 
 
@@ -42,12 +42,12 @@ def event_detail(event_slug):
 
 
 
-@events.route('/channels/<channel_slug>/events', methods=['GET'])
-def channel_event_list(channel_slug):
+@events.route('/workshops/<workshop_slug>/events', methods=['GET'])
+def workshop_event_list(workshop_slug):
 
     if request.method == 'GET':
-        channel = Channel.get_by_slug(channel_slug)
-        if channel:
-            response = Event.serialize_list(channel.events)
+        workshop = Workshop.get_by_slug(workshop_slug)
+        if workshop:
+            response = Event.serialize_list(workshop.events)
             return jsonify(response)
         return '', 404

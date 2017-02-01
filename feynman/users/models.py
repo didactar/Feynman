@@ -29,9 +29,9 @@ class User(db.Model):
     def get_by_id(self, id):
         return User.query.filter_by(id=id).first()
 
-    def get_participations(self, channel=None):
-        if channel:
-            return self.participations.join('event', 'channel').filter_by(id=channel.id)
+    def get_participations(self, workshop=None):
+        if workshop:
+            return self.participations.join('event', 'workshop').filter_by(id=workshop.id)
         return self.participations
     
     def save(self):

@@ -1,11 +1,11 @@
 from feynman.me.api import me
 from feynman.users.api import users
 from feynman.events.api import events
-from feynman.channels.api import channels
+from feynman.workshops.api import workshops
 from feynman.participations.api import participations
 
 
-BLUEPRINTS = [me, users, events, channels, participations]
+BLUEPRINTS = [me, users, events, workshops, participations]
 
 
 def register_blueprints(app):

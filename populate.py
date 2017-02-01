@@ -1,21 +1,21 @@
 from database import db
 from factory import create_app
 
-from feynman.users.populate import populate_users
-from feynman.channels.populate import populate_channels
-from feynman.events.populate import populate_events
-from feynman.participations.populate import populate_participations
+from feynman.users.utils.populate import populate_users
+from feynman.workshops.utils.populate import populate_workshops
+from feynman.events.utils.populate import populate_events
+from feynman.participations.utils.populate import populate_participations
 
 
 
 def populate_db():
     print('populating users...')
     users = populate_users()
-    print('populating channels...')
-    channels = populate_channels()
-    for channel in channels:
+    print('populating workshops...')
+    workshops = populate_workshops()
+    for workshop in workshops:
         print('  populating events...')
-        events = populate_events(channel)
+        events = populate_events(workshop)
         for event in events:
             print('    populating participations...')
             populate_participations(event, users, 5)
