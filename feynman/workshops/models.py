@@ -6,7 +6,7 @@ class Workshop(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(512))
-    description = db.Column(db.Text)
+    guide = db.Column(db.Text)
     image = db.Column(db.String(512))
     avatar = db.Column(db.String(512))
     slug = db.Column(db.String(1024))
@@ -14,7 +14,7 @@ class Workshop(db.Model):
 
     def __init__(self, data):
         self.name = data.get('name', '')
-        self.description = data.get('description', '')
+        self.guide = data.get('guide', '')
         self.image = data.get('image', '')
         self.avatar = data.get('avatar', '')
         self.slug = slugify(data.get('name'))
@@ -42,7 +42,7 @@ class Workshop(db.Model):
             'slug': self.slug,
             'image': self.image,
             'avatar': self.avatar,
-            'description': self.description
+            'guide': self.guide
         }
 
     @classmethod

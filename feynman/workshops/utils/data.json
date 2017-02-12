@@ -1,25 +1,21 @@
 [
 {
     "name": "Science and Stuff",
-    "description": "Description of the workshop Science and Stuff",
     "avatar": "science",
     "image": "science"
 },
 {
     "name": "Programming for beginners",
-    "description": "Description of the workshop Programming for begginers",
     "avatar": "programming",
     "image": "programming"
 },
 {
     "name": "General Culture",
-    "description": "Description of the workshop General Culture",
     "avatar": "culture",
     "image": "culture"
 },
 {
     "name": "Art",
-    "description": "Description of the workshop Art",
     "avatar": "art",
     "image": "art"
 }
