@@ -1,197 +1,118 @@
 [
     {
         "name": "Carl Sagan",
-        "avatarURL": "http://carlsaganday.com/wp-content/uploads/2013/09/carlsagan.jpg",
         "avatar": "carl-sagan"
     },
     {
         "name": "Isaac Asimov",
-        "avatarURL": "http://www.slate.com/content/dam/slate/articles/technology/future_tense/2013/11/131113_FT_IsaacAsimov.jpg.CROP.promo-mediumlarge.jpg",
         "avatar": "isaac-asimov"
     },
     {
         "name": "Richard Feynman",
-        "avatarURL": "http://www.washington.edu/news/files/2011/10/RichardFeynmanBBC.jpg",
         "avatar": "richard-feynman"
     },
     {
         "name": "Jane Goodall",
-        "avatarURL": "http://hilobrow.com/wp-content/uploads/2012/04/jane_goodall.jpg",
         "avatar": "jane-goodall"
     },
     {
         "name": "David Attenborough",
-        "avatarURL": "http://www.rspb.org.uk/Images/david_attenborough_tcm9-345814.jpg",
         "avatar": "david-attenborough"
     },
     {
         "name": "Dan Ariely",
-        "avatarURL": "http://media.npr.org/books/booktour/2008/mar/ariely_200-7e2989bc6a3082b3c7f7e27e4d549f5d723bc45c-s6-c30.jpg",
         "avatar": "dan-ariely"
     },
     {
         "name": "John Green",
-        "avatarURL": "http://i.telegraph.co.uk/multimedia/archive/02929/John-Green_2929212b.jpg",
         "avatar": "john-green"
     },
     {
         "name": "Hank Green",
-        "avatarURL": "https://amandafinlawwritingportfolio.files.wordpress.com/2013/04/hank-green.png",
         "avatar": "hank-green"
     },
     {
         "name": "Walter Lewin",
-        "avatarURL": "http://i.huffpost.com/gen/2527556/images/n-WALTER-LEWIN-large570.jpg",
         "avatar": "walter-lewin"
     },
     {
         "name": "Paul Bloom",
-        "avatarURL": "https://pbs.twimg.com/profile_images/505859392999153664/dwZOxfAP.jpeg",
         "avatar": "paul-bloom"
     },
     {
         "name": "Bill Nye",
-        "avatarURL": "http://rack.1.mshcdn.com/media/ZgkyMDEzLzA5LzE5LzQwL2JpbGxueWVzY2llLjUyYzc2LmpwZwpwCXRodW1iCTk1MHg1MzQjCmUJanBn/35d31e02/92c/bill-nye-science.jpg",
         "avatar": "bill-nye"
     },
     {
         "name": "Ann Druyan",
-        "avatarURL": "http://www.nasa.gov/images/content/270965main_ann-druyan-browse.jpg",
         "avatar": "ann-druyan"
     },
     {
         "name": "Neil DeGrasse Tyson",
-        "avatarURL": "http://climatechangenationalforum.org/wp-content/uploads/2014/03/NeilDeGrasseTyson.png",
         "avatar": "neil-degrasse-tyson"
     },
     {
         "name": "Chuck Bryant",
-        "avatarURL": "https://s-media-cache-ak0.pinimg.com/236x/de/5f/54/de5f54206d547a9da757290111162c1d.jpg",
         "avatar": "chuck-bryant"
     },
     {
         "name": "Josh Clark",
-        "avatarURL": "http://www1.pictures.zimbio.com/gi/Josh+Clark+2013+Winter+TCA+Tour+Day+2+-CX_SC4Phhxl.jpg",
         "avatar": "josh-clark"
     },
     {
         "name": "Robert Sapolsky",
-        "avatarURL": "http://newsinfo.iu.edu/pub/libs/images/usr/4448.jpg",
         "avatar": "robert-sapolsky"
     },
     {
         "name": "Michael Sandel",
-        "avatarURL": "http://www.thesundaytimes.co.uk/sto/multimedia/dynamic/00271/05INT_271306k.jpg",
         "avatar": "michael-sandel"
     },
     {
-        "name": "Donald Knuth",
-        "avatarURL": "http://news.stanford.edu/news/2011/june/images/knuth_news.jpg",
-        "avatar": "donald-knuth"
-    },
-    {
         "name": "Paul Andersen",
-        "avatarURL": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSatMF8-Oukr4Gr-yZyZLTshdyiEqdy24Ym3Q9VBxHQ4NvkpeOU",
         "avatar": "paul-andersen"
     },
     {
         "name": "Salman Khan",
-        "avatarURL": "https://pbs.twimg.com/media/CX-gEtwWAAAUshI.jpg",
         "avatar": "salman-khan"
     },
     {
         "name": "Jared Diamond",
-        "avatarURL": "http://d39ya49a1fwv14.cloudfront.net/wp-content/uploads/2012/08/JaredDiamond.jpg",
         "avatar": "jared-diamond"
     },
     {
-        "name": "Richard Dawkins",
-        "avatarURL": "https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2012/1/13/1326497319868/Richard-Dawkins-007.jpg",
-        "avatar": "richard-dawkins"
-    },
-    {
-        "name": "Lawrence M. Krauss",
-        "avatarURL": "http://assets1.bigthink.com/system/user_icons/481033/original/Lawrence-Krauss-HS.jpg",
-        "avatar": "lawrence-m-krauss"
-    },
-    {
         "name": "Steven Pinker",
-        "avatarURL": "http://vignette1.wikia.nocookie.net/wikiality/images/4/4f/Stephen-Pinker.jpg",
         "avatar": "steven-pinker"
     },
     {
-        "name": "Daniel Dennett",
-        "avatarURL": "http://www.wittenburgdoor.com/files/images2/dennett300.jpg",
-        "avatar": "daniel-dennett"
-    },
-    {
         "name": "Stephen Jay Gould",
-        "avatarURL": "http://www.findingdulcinea.com/docroot/dulcinea/fd_images/features/profiles/g/stephen-jay-gould/features/0/image.jpg",
         "avatar": "stephen-jay-gould"
     },
     {
         "name": "Stephen Hawking",
-        "avatarURL": "http://vignette2.wikia.nocookie.net/epicrapbattlesofhistory/images/1/1a/Stephen_Hawking_Based_On.jpg",
         "avatar": "stephen-hawking"
     },
     {
-        "name": "Brian Greene",
-        "avatarURL": "http://www.wired.com/images_blogs/underwire/2012/05/briane_greene_660.jpg",
-        "avatar": "brian-greene"
-    },
-    {
-        "name": "Michael Shermer",
-        "avatarURL": "https://pbs.twimg.com/profile_images/471409723636322304/BDjFSn30.jpeg",
-        "avatar": "michael-shermer"
-    },
-    {
         "name": "Phil Plait",
-        "avatarURL": "http://www.samaralectures.com/wp-content/uploads/2011/01/pplait-homepage1.jpg",
         "avatar": "phil-plait"
     },
     {
-        "name": "Andrew Ng",
-        "avatarURL": "https://s3.amazonaws.com/coursera/media/Andrew_Ng.png",
-        "avatar": "andrew-ng"
-    },
-    {
-        "name": "Susan Greenfield",
-        "avatarURL": "https://d.ibtimes.co.uk/en/full/272983/baroness-susan-greenfield.jpg",
-        "avatar": "susan-greenfield"
-    },
-    {
-        "name": "Oliver Sacks",
-        "avatarURL": "https://williamoconnor.files.wordpress.com/2015/08/sacks1.jpg",
-        "avatar": "oliver-sacks"
+        "name": "Bertrand Russell",
+        "avatar": "bertrand-russell"
     },
     {
         "name": "Hans Rosling",
-        "avatarURL": "http://i.bnet.com/blogs/hans_rosling_254x191.jpg",
         "avatar": "hans-rosling"
     },
     {
         "name": "Brian Cox",
-        "avatarURL": "http://media.ents24network.com/image/000/043/729/0e038e7949f1422e3324c3369fdb067e6a2b113a.jpg",
         "avatar": "brian-cox"
     },
     {
-        "name": "Ben Goldacre",
-        "avatarURL": "https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2009/01/05/BenGoldacre460.jpg",
-        "avatar": "ben-goldacre"
+        "name": "Dan Carlin",
+        "avatar": "dan-carlin"
     },
     {
-        "name": "Jessi Knudsen",
-        "avatarURL": "https://pbs.twimg.com/profile_images/573259463399899136/Y25BwDcF.jpeg",
-        "avatar": "jessi-knudsen"
-    },
-    {
-        "name": "Henry Reich",
-        "avatarURL": "http://vidcon.com/wp-content/uploads/2015/04/HenryReich.jpg",
-        "avatar": "henry-reich"
-    },
-    {
-        "name": "Emily Graslie",
-        "avatarURL": "http://stemwomenonfire.weebly.com/uploads/7/5/1/1/7511984/1130409_orig.jpg",
-        "avatar": "emily-graslie"
+        "name": "Jordan Peterson",
+        "avatar": "jordan-peterson"
     }
 ]

@@ -2,4 +2,4 @@
 *.swp
 .cache
 __pycache__
-config.py
+config

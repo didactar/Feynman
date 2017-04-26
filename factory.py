@@ -1,5 +1,5 @@
 from flask import Flask
-from config.config import Config
+from configuration import Config
 from flask_cors import CORS
 from blueprints import register_blueprints
 from database import db

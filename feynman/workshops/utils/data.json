@@ -1,22 +1,42 @@
 [
 {
-    "name": "Science and Stuff",
-    "avatar": "science",
-    "image": "science"
+    "name": "Astronomy",
+    "image": "astronomy"
 },
 {
-    "name": "Programming for beginners",
-    "avatar": "programming",
+    "name": "Programming",
     "image": "programming"
 },
 {
     "name": "General Culture",
-    "avatar": "culture",
     "image": "culture"
 },
 {
     "name": "Art",
-    "avatar": "art",
     "image": "art"
+},
+{
+    "name": "Psychology",
+    "image": "psychology"
+},
+{
+    "name": "History",
+    "image": "history"
+},
+{
+    "name": "Cooking",
+    "image": "cooking"
+},
+{
+    "name": "Philosophy",
+    "image": "philosophy"
+},
+{
+    "name": "Economy",
+    "image": "economy"
+},
+{
+    "name": "Literature",
+    "image": "literature"
 }
 ]
